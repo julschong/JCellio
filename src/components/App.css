@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.flex-gap-1 {
+    gap: 1%;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('https://images.unsplash.com/photo-1464802686167-b939a6910659?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1933&q=80');
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
+
+[class='font-size-1.2em'] {
+    font-size: 1.2em;
+}
+
+.bg-white-transparent {
+    background-color: hsl(0, 0%, 100%, 0.3);
+}
