@@ -1,8 +1,9 @@
+import { useEffect, useRef } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { Button } from 'reactstrap';
 import Item from './Item';
 
-const Column = ({ columnId, column, addItem }) => {
+const Column = ({ columnId, column, addItem, changeColumnName }) => {
     return (
         <div
             style={{
@@ -12,7 +13,7 @@ const Column = ({ columnId, column, addItem }) => {
             }}
         >
             <div
-                className="p-3"
+                className="p-3 columns"
                 style={{
                     margin: 8,
                     backgroundColor: 'lightgrey',
@@ -20,7 +21,22 @@ const Column = ({ columnId, column, addItem }) => {
                     position: 'relative'
                 }}
             >
-                <h2 className="font-size-1.2em">{column.name}</h2>
+                <textarea
+                    onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                            e.target.value = e.target.value.trim();
+                            e.target.blur();
+                        }
+                    }}
+                    onBlur={(e) => {
+                        changeColumnName(columnId, e.target.value);
+                    }}
+                    spellCheck={false}
+                    className="font-size-1.2em"
+                    maxLength="50"
+                    defaultValue={column.name}
+                />
+
                 <Button
                     onClick={() => addItem(columnId)}
                     style={{

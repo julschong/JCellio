@@ -58,6 +58,15 @@ const MainBoard = () => {
         });
     };
 
+    const changeColumnName = (columnId, newName) => {
+        setColumns((prev) => {
+            return {
+                ...prev,
+                [columnId]: { ...prev[columnId], name: newName }
+            };
+        });
+    };
+
     const addItem = (columnId) => {
         const newItem = {
             content: `New Task ${columns[columnId].items.length}`,
@@ -93,6 +102,7 @@ const MainBoard = () => {
                                     column={column}
                                     columnId={columnId}
                                     addItem={addItem}
+                                    changeColumnName={changeColumnName}
                                 />
                             );
                         }
