@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { Button } from 'reactstrap';
+import AddItem from './AddItem';
 import Item from './Item';
 
 const Column = ({ columnId, column, addItem, changeColumnName }) => {
+    const [addingItem, setAddingItem] = useState(false);
+
     return (
         <div
             style={{
@@ -36,7 +39,6 @@ const Column = ({ columnId, column, addItem, changeColumnName }) => {
                     maxLength="50"
                     defaultValue={column.name}
                 />
-
                 <Button
                     onClick={() => addItem(columnId)}
                     style={{
@@ -82,6 +84,13 @@ const Column = ({ columnId, column, addItem, changeColumnName }) => {
                         );
                     }}
                 </Droppable>
+                {addingItem ? (
+                    <AddItem />
+                ) : (
+                    <button onClick={() => setAddingItem(true)} href="#">
+                        + Add another card
+                    </button>
+                )}
             </div>
         </div>
     );

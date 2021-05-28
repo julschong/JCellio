@@ -51,3 +51,18 @@ body {
     background-color: white;
     outline: 3px rgb(20, 20, 150) solid;
 }
+
+.columns button {
+    text-decoration: none;
+    color: grey;
+    cursor: pointer;
+    padding: 0.5em;
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.columns button:hover {
+    background-color: hsl(0, 0%, 100%, 0.3);
+}
