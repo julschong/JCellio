@@ -1,7 +1,8 @@
 import { Droppable } from 'react-beautiful-dnd';
+import { Button } from 'reactstrap';
 import Item from './Item';
 
-const Column = ({ columnId, column }) => {
+const Column = ({ columnId, column, addItem }) => {
     return (
         <div
             style={{
@@ -10,7 +11,32 @@ const Column = ({ columnId, column }) => {
                 alignItems: 'center'
             }}
         >
-            <div style={{ margin: 8 }}>
+            <div
+                className="p-3"
+                style={{
+                    margin: 8,
+                    backgroundColor: 'lightgrey',
+                    borderRadius: '5px',
+                    position: 'relative'
+                }}
+            >
+                <h2 className="font-size-1.2em">{column.name}</h2>
+                <Button
+                    onClick={() => addItem(columnId)}
+                    style={{
+                        lineHeight: '1em',
+                        display: 'inline-block',
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        fontSize: '2em',
+                        padding: 0,
+                        backgroundColor: 'transparent',
+                        border: 'none'
+                    }}
+                >
+                    +
+                </Button>
                 <Droppable droppableId={columnId} key={columnId}>
                     {(provided, snapshot) => {
                         return (
@@ -21,15 +47,11 @@ const Column = ({ columnId, column }) => {
                                     background: snapshot.isDraggingOver
                                         ? 'gray'
                                         : 'lightgrey',
-                                    padding: 10,
                                     width: 250,
-                                    minHeight: 500,
+                                    minHeight: 100,
                                     borderRadius: '5px'
                                 }}
                             >
-                                <h2 className="font-size-1.2em">
-                                    {column.name}
-                                </h2>
                                 {column.items.map((item, index) => {
                                     return (
                                         <Item
