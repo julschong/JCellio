@@ -67,9 +67,9 @@ const MainBoard = () => {
         });
     };
 
-    const addItem = (columnId) => {
+    const addItem = (columnId, newContent) => {
         const newItem = {
-            content: `New Task ${columns[columnId].items.length}`,
+            content: newContent,
             id: uuid()
         };
         setColumns((prev) => {

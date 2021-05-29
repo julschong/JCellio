@@ -6,6 +6,7 @@ const Item = ({ item, index }) => {
             {(provided, snapshot) => {
                 return (
                     <div
+                        className="item"
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}

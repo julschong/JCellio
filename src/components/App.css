@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
 .flex-gap-1 {
     gap: 1%;
 }
@@ -45,6 +44,7 @@ body {
     height: auto;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 .columns textarea:focus {
@@ -65,4 +65,13 @@ body {
 
 .columns button:hover {
     background-color: hsl(0, 0%, 100%, 0.3);
+}
+
+.form-group textarea:focus {
+    outline: none;
+    border: none;
+}
+
+.item {
+    box-shadow: 1px 1px 2px hsla(0, 100%, 0%, 0.5) !important;
 }
