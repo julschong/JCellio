@@ -45,11 +45,12 @@ body {
     padding: 0;
     margin: 0;
     width: 100%;
+    transition: boxshadow 0.5s;
 }
 
 .columns textarea:focus {
     background-color: white;
-    outline: 3px rgb(20, 20, 150) solid;
+    box-shadow: inset 0 0 0 2px #0079bf;
 }
 
 .columns button {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column';
@@ -57,7 +57,6 @@ const MainBoard = () => {
             return { ...prev, [uuid()]: newColumn };
         });
     };
-
     const changeColumnName = (columnId, newName) => {
         setColumns((prev) => {
             return {
@@ -83,6 +82,13 @@ const MainBoard = () => {
         });
     };
 
+    const sortedColumns = useMemo(() => {
+        const sortedColumns = [...Object.entries(columns)];
+        sortedColumns.sort((a, b) => a[1].index - b[1].index);
+        console.table(sortedColumns);
+        return sortedColumns;
+    }, [columns]);
+
     return (
         <>
             <div
@@ -94,19 +100,17 @@ const MainBoard = () => {
                 }}
             >
                 <DragDropContext onDragEnd={dragEnd}>
-                    {Object.entries(columns).map(
-                        ([columnId, column], index) => {
-                            return (
-                                <Column
-                                    key={columnId}
-                                    column={column}
-                                    columnId={columnId}
-                                    addItem={addItem}
-                                    changeColumnName={changeColumnName}
-                                />
-                            );
-                        }
-                    )}
+                    {sortedColumns.map(([columnId, column], index) => {
+                        return (
+                            <Column
+                                key={columnId}
+                                column={column}
+                                columnId={columnId}
+                                addItem={addItem}
+                                changeColumnName={changeColumnName}
+                            />
+                        );
+                    })}
                 </DragDropContext>
                 <Button
                     className="m-2"
