@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Container, Form, FormGroup, Input } from 'reactstrap';
+import { Form, FormGroup, Input } from 'reactstrap';
 
 const AddItem = ({ addItem, columnId, setAddingItem, addingItem }) => {
     const text = useRef();

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column';
-import { Button } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
 import AddColumn from './AddColumn';
 
