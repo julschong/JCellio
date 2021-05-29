@@ -11,22 +11,18 @@ export const itemsFromBackend = [
 export const columnsFromBackend = {
     [uuid()]: {
         name: 'Requested',
-        items: itemsFromBackend,
-        index: 0
+        items: itemsFromBackend
     },
     [uuid()]: {
         name: 'To do',
-        items: [],
-        index: 1
+        items: []
     },
     [uuid()]: {
         name: 'In Progress',
-        items: [],
-        index: 3
+        items: []
     },
     [uuid()]: {
         name: 'Done',
-        items: [],
-        index: 2
+        items: []
     }
 };

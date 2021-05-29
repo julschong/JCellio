@@ -1,15 +1,18 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column';
 import { Button } from 'reactstrap';
 import { v4 as uuid } from 'uuid';
+import AddColumn from './AddColumn';
 
 const MainBoard = () => {
     const [columns, setColumns] = useState(columnsFromBackend);
+    const [addingColumn, setAddingColumn] = useState(false);
 
     const dragEnd = (result) => {
         const { source, destination } = result;
+        console.log(result);
 
         if (destination) {
             if (
@@ -48,10 +51,10 @@ const MainBoard = () => {
         }
     };
 
-    const addColumn = () => {
+    const addColumn = (name) => {
         const newColumn = {
             items: [],
-            name: `New Column ${Object.keys(columns).length + 1}`
+            name: `${name}`
         };
         setColumns((prev) => {
             return { ...prev, [uuid()]: newColumn };
@@ -82,43 +85,52 @@ const MainBoard = () => {
         });
     };
 
-    const sortedColumns = useMemo(() => {
-        const sortedColumns = [...Object.entries(columns)];
-        sortedColumns.sort((a, b) => a[1].index - b[1].index);
-        console.table(sortedColumns);
-        return sortedColumns;
-    }, [columns]);
+    // const sortedColumns = useMemo(() => {
+    //     const sortedColumns = [...Object.entries(columns)];
+    //     sortedColumns.sort((a, b) => a[1].index - b[1].index);
+    //     return sortedColumns;
+    // }, [columns]);
 
     return (
         <>
             <div
+                className="main"
                 style={{
                     display: 'flex',
                     justifyContent: 'start',
                     height: '100%',
-                    overflow: 'auto'
+                    overflow: 'auto',
+                    minWidth: '80vw'
                 }}
             >
                 <DragDropContext onDragEnd={dragEnd}>
-                    {sortedColumns.map(([columnId, column], index) => {
-                        return (
-                            <Column
-                                key={columnId}
-                                column={column}
-                                columnId={columnId}
-                                addItem={addItem}
-                                changeColumnName={changeColumnName}
-                            />
-                        );
-                    })}
+                    {Object.entries(columns).map(
+                        ([columnId, column], index) => {
+                            return (
+                                <Column
+                                    key={columnId}
+                                    column={column}
+                                    columnId={columnId}
+                                    addItem={addItem}
+                                    changeColumnName={changeColumnName}
+                                />
+                            );
+                        }
+                    )}
                 </DragDropContext>
-                <Button
+                {/* <Button
                     className="m-2"
                     onClick={addColumn}
                     style={{ maxHeight: '50px', whiteSpace: 'nowrap' }}
                 >
                     Add Another List
-                </Button>
+                </Button> */}
+
+                <AddColumn
+                    addColumn={addColumn}
+                    addingColumn={addingColumn}
+                    setAddingColumn={setAddingColumn}
+                />
             </div>
         </>
     );

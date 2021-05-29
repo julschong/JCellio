@@ -7,6 +7,7 @@
 *::after,
 *::before {
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
@@ -33,7 +34,8 @@ body {
     color: aliceblue;
 }
 
-.columns textarea {
+.columns textarea,
+.add-column textarea {
     cursor: pointer;
     background-color: transparent;
     overflow: hidden;
@@ -48,12 +50,15 @@ body {
     transition: boxshadow 0.5s;
 }
 
-.columns textarea:focus {
+.columns textarea:focus,
+.add-column textarea:focus {
     background-color: white;
     box-shadow: inset 0 0 0 2px #0079bf;
 }
 
-.columns button {
+.columns button,
+.add-column button,
+.main button {
     text-decoration: none;
     color: grey;
     cursor: pointer;
@@ -64,8 +69,14 @@ body {
     border: none;
 }
 
-.columns button:hover {
+.columns button:hover,
+.add-column button:hover {
     background-color: hsl(0, 0%, 100%, 0.3);
+}
+
+.add-column {
+    min-width: 300px;
+    flex-shrink: 0;
 }
 
 .form-group textarea:focus {

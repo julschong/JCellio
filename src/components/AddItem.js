@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Form, FormGroup, Input } from 'reactstrap';
+import { useRef } from 'react';
+import { Container, Form, FormGroup, Input } from 'reactstrap';
 
 const AddItem = ({ addItem, columnId, setAddingItem, addingItem }) => {
     const text = useRef();
@@ -30,7 +30,10 @@ const AddItem = ({ addItem, columnId, setAddingItem, addingItem }) => {
                     name="card-content"
                     id="content"
                     placeholder="Enter a title for this card..."
-                    style={{ backgroundColor: 'white', borderRadius: '5px' }}
+                    style={{
+                        backgroundColor: 'white',
+                        borderRadius: '5px'
+                    }}
                     spellCheck={false}
                     autoFocus
                 />
