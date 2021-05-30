@@ -4,8 +4,7 @@ const {
     createNewBoard,
     getOneBoard,
     deleteBoard,
-    updateBoard,
-    addColumn
+    updateBoard
 } = require('../controller/board.controller');
 const { authorization } = require('../middleware/authorization');
 const { idReformat } = require('../middleware/idReformat');
@@ -20,8 +19,8 @@ boardRoute.route('/').get(getAllBoards).post(createNewBoard);
 
 boardRoute
     .route('/:id')
-    .get(getOneBoard)
+    .get(idReformat, getOneBoard)
     .delete(idReformat, deleteBoard)
-    .put(updateBoard);
+    .put(idReformat, updateBoard);
 
 module.exports = boardRoute;
