@@ -4,13 +4,24 @@ const {
     createNewBoard,
     getOneBoard,
     deleteBoard,
-    updateBoard
+    updateBoard,
+    addColumn
 } = require('../controller/board.controller');
+const { authorization } = require('../middleware/authorization');
+const { idReformat } = require('../middleware/idReformat');
+const columnRoute = require('./column.route');
 
 const boardRoute = express.Router();
 
-boardRoute.route('').get(getAllBoards).post(createNewBoard);
+boardRoute.use('/:boardId/columns', columnRoute);
+boardRoute.use(authorization);
 
-boardRoute.route('/:id').get(getOneBoard).delete(deleteBoard).put(updateBoard);
+boardRoute.route('/').get(getAllBoards).post(createNewBoard);
+
+boardRoute
+    .route('/:id')
+    .get(getOneBoard)
+    .delete(idReformat, deleteBoard)
+    .put(updateBoard);
 
 module.exports = boardRoute;
