@@ -18,6 +18,8 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         }
     });
 
+    delete newUser.password;
+
     res.status(201).json({ success: true, data: newUser });
 });
 

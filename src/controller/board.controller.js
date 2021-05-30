@@ -24,14 +24,7 @@ exports.updateBoard = asyncHandler(async (req, res, next) => {
 exports.deleteBoard = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
     console.log(typeof id);
-    await column.deleteMany({
-        where: {
-            boardId: id
-        }
-    });
-    await board.delete({
-        where: { id: id }
-    });
+    await board.delete({ where: { id } });
 
     res.status(200).json({ success: true, data: [] });
 });

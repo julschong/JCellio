@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Board" ALTER COLUMN "userId" DROP NOT NULL;
