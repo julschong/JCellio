@@ -8,9 +8,9 @@ exports.getAllBoards = asyncHandler(async (req, res, next) => {
     const boards = await board.findMany({
         where: { userId: req.info.id },
         include: {
-            Column: {
+            columns: {
                 include: {
-                    task: true
+                    tasks: true
                 }
             }
         }
@@ -38,7 +38,7 @@ exports.getOneBoard = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
     const foundBoard = await board.findUnique({
         where: { id },
-        include: { Column: true }
+        include: { columns: { include: { tasks: true } } }
     });
 
     if (!foundBoard) {

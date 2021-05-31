@@ -25,5 +25,13 @@ exports.idReformat = (req, res, next) => {
         }
     }
 
+    if (req.params.taskId) {
+        try {
+            req.params.taskId = Number(req.params.taskId);
+        } catch (error) {
+            throw new ErrorResponse(400, 'Malformed id');
+        }
+    }
+
     next();
 };
