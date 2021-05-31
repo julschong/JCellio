@@ -1,6 +1,6 @@
-import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
+import { Button, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
 
-const Navigation = () => {
+const Navigation = ({ token, setToken, authed }) => {
     return (
         <Navbar
             className="border-bottom p-3"
@@ -13,12 +13,20 @@ const Navigation = () => {
                 navbar
             >
                 <NavItem>
-                    <NavLink href="#">Home</NavLink>
+                    <NavLink href="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="#">Dashboard</NavLink>
+                    <NavLink href="/dashboard">Dashboard</NavLink>
                 </NavItem>
+                {!authed ? (
+                    <NavItem>
+                        <NavLink href="/login">Login</NavLink>
+                    </NavItem>
+                ) : null}
             </Nav>
+            {token ? (
+                <Button onClick={() => setToken(null)}>Logout</Button>
+            ) : null}
         </Navbar>
     );
 };

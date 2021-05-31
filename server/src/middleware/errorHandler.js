@@ -2,7 +2,7 @@ const errorHandler = (err, _req, res, _next) => {
     let message = err.message;
     let errorStatus = err.statusCode || 500;
 
-    console.log(err);
+    // console.log(err);
 
     if (err.code === 'P2002') {
         message = `${err.meta.target.join(', ')} already exist`;
