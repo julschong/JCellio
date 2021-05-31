@@ -7,7 +7,13 @@ exports.getAllBoards = asyncHandler(async (req, res, next) => {
     console.log(req.info);
     const boards = await board.findMany({
         where: { userId: req.info.id },
-        include: { Column: true }
+        include: {
+            Column: {
+                include: {
+                    task: true
+                }
+            }
+        }
     });
     res.status(200).json({ success: true, data: boards });
 });

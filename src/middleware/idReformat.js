@@ -17,5 +17,13 @@ exports.idReformat = (req, res, next) => {
         }
     }
 
+    if (req.params.columnId) {
+        try {
+            req.params.columnId = Number(req.params.columnId);
+        } catch (error) {
+            throw new ErrorResponse(400, 'Malformed id');
+        }
+    }
+
     next();
 };
