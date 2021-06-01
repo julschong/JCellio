@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 
 import Navigation from './Navigation';
 import Login from './Login';
+import Register from './Register';
 import DashBoard from './DashBoard';
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
     return (
         <Router>
             <Navigation token={token} setToken={setToken} authed={authed} />
-            <div className="d-flex flex-column" style={{ height: '100vh' }}>
+            <main className="d-flex flex-column position-relative">
                 <Switch>
                     <Route exact path="/" />
 
@@ -37,8 +38,11 @@ function App() {
                     <Route path="/login">
                         <Login setToken={setToken} authed={authed} />
                     </Route>
+                    <Route path="/register">
+                        <Register />
+                    </Route>
                 </Switch>
-            </div>
+            </main>
         </Router>
     );
 }

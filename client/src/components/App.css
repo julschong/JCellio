@@ -20,8 +20,16 @@ body {
     font-size: 1.2em;
 }
 
+main {
+    height: calc(100vh - 80px);
+}
+
 .bg-white-transparent {
     background-color: hsl(0, 0%, 100%, 0.3);
+}
+
+.navbar {
+    height: 80px;
 }
 
 .navbar-brand {
@@ -86,4 +94,38 @@ body {
 
 .item {
     box-shadow: 1px 1px 2px hsla(0, 100%, 0%, 0.5) !important;
+}
+
+.sidebar {
+    left: 0;
+    top: 0;
+    padding: 20px;
+    padding-top: 40px;
+    min-width: 250px;
+    background-color: darkgrey;
+    height: 100%;
+    transform: translateX(-250px);
+    transition: transform 0.1s ease-in-out;
+}
+
+.sidebar ul {
+    padding: 0;
+}
+
+.sidebar li {
+    text-decoration: none;
+    list-style: none;
+    border-bottom: 1px solid grey;
+    padding: 5px;
+    transition: 0.5s;
+}
+
+.sidebar li:hover {
+    background-color: antiquewhite;
+}
+
+.sidebar button {
+    width: 100%;
+    background-color: transparent;
+    border: none;
 }

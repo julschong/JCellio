@@ -9,7 +9,7 @@ const Login = ({ setToken, authed }) => {
     const [error, setError] = useState('');
 
     return (
-        <div className="container w-25">
+        <div className="container w-25 mt-2">
             {!authed ? (
                 <>
                     <h2>Login</h2>
@@ -29,9 +29,19 @@ const Login = ({ setToken, authed }) => {
                             ) {
                                 errors.email = 'Invalid email address';
                             }
+                            if (!values.password) {
+                                errors.password = 'Required';
+                            } else if (
+                                !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(
+                                    values.password
+                                )
+                            ) {
+                                errors.password = 'Invalid password';
+                            }
                             return errors;
                         }}
                         onSubmit={(values, { setSubmitting }) => {
+                            setSubmitting(true);
                             axios
                                 .post(
                                     'http://localhost:3003/api/v1/auth/login',
@@ -47,8 +57,7 @@ const Login = ({ setToken, authed }) => {
                                 })
                                 .catch((err) =>
                                     setError(err.response.data.error)
-                                )
-                                .finally(setSubmitting(false));
+                                );
                         }}
                     >
                         {({
@@ -65,27 +74,58 @@ const Login = ({ setToken, authed }) => {
                                 className="d-flex flex-column gap-2"
                                 onSubmit={handleSubmit}
                             >
+                                <label className="fs-4" htmlFor="email">
+                                    Email
+                                </label>
                                 <input
                                     type="email"
                                     name="email"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.email}
+                                    placeholder="Enter your email"
                                 />
-                                {errors.email && touched.email && errors.email}
+                                <p style={{ color: 'red' }}>
+                                    {errors.email &&
+                                        touched.email &&
+                                        errors.email}
+                                </p>
+
+                                <label className="fs-4" htmlFor="password">
+                                    Password
+                                </label>
                                 <input
                                     type="password"
                                     name="password"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.password}
+                                    placeholder="Enter your password"
                                 />
-                                {errors.password &&
-                                    touched.password &&
-                                    errors.password}
-                                <button type="submit" disabled={isSubmitting}>
-                                    Submit
-                                </button>
+                                <p style={{ color: 'red' }}>
+                                    {errors.password &&
+                                        touched.password &&
+                                        errors.password}
+                                </p>
+
+                                <div className="d-flex gap-1">
+                                    <button
+                                        className="w-50"
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                    >
+                                        Login
+                                    </button>
+                                    <button
+                                        className="w-50"
+                                        onClick={() =>
+                                            history.push('/register')
+                                        }
+                                        disabled={isSubmitting}
+                                    >
+                                        Register
+                                    </button>
+                                </div>
                             </form>
                         )}
                     </Formik>

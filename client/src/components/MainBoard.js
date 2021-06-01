@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column';
 import { v4 as uuid } from 'uuid';
 import AddColumn from './AddColumn';
 
-const MainBoard = () => {
-    const [columns, setColumns] = useState(columnsFromBackend);
+const MainBoard = ({ data, selectedIndex }) => {
+    const [columns, setColumns] = useState();
+    useEffect(() => {
+        if (data) {
+            setColumns(data[selectedIndex].columns);
+        }
+    }, [data, selectedIndex]);
     const [addingColumn, setAddingColumn] = useState(false);
 
     const dragEnd = (result) => {
@@ -21,9 +26,9 @@ const MainBoard = () => {
                 return;
             }
             setColumns((prev) => {
-                const sourceItems = Array.from(prev[source.droppableId].items);
+                const sourceItems = Array.from(prev[source.droppableId].tasks);
                 let destinationItems = Array.from(
-                    prev[destination.droppableId].items
+                    prev[destination.droppableId].tasks
                 );
 
                 const itemMoved = sourceItems.splice(source.index, 1);
@@ -39,11 +44,11 @@ const MainBoard = () => {
                     ...prev,
                     [source.droppableId]: {
                         ...prev[source.droppableId],
-                        items: sourceItems
+                        tasks: sourceItems
                     },
                     [destination.droppableId]: {
                         ...prev[destination.droppableId],
-                        items: destinationItems
+                        tasks: destinationItems
                     }
                 };
             });
@@ -52,8 +57,8 @@ const MainBoard = () => {
 
     const addColumn = (name) => {
         const newColumn = {
-            items: [],
-            name: `${name}`
+            tasks: [],
+            title: `${name}`
         };
         setColumns((prev) => {
             return { ...prev, [uuid()]: newColumn };
@@ -63,14 +68,14 @@ const MainBoard = () => {
         setColumns((prev) => {
             return {
                 ...prev,
-                [columnId]: { ...prev[columnId], name: newName }
+                [columnId]: { ...prev[columnId], title: newName }
             };
         });
     };
 
-    const addItem = (columnId, newContent) => {
-        const newItem = {
-            content: newContent,
+    const addTask = (columnId, newTitle) => {
+        const newTask = {
+            name: newTitle,
             id: uuid()
         };
         setColumns((prev) => {
@@ -78,59 +83,48 @@ const MainBoard = () => {
                 ...prev,
                 [columnId]: {
                     ...prev[columnId],
-                    items: [...prev[columnId].items, newItem]
+                    tasks: [...prev[columnId].tasks, newTask]
                 }
             };
         });
     };
 
-    // const sortedColumns = useMemo(() => {
-    //     const sortedColumns = [...Object.entries(columns)];
-    //     sortedColumns.sort((a, b) => a[1].index - b[1].index);
-    //     return sortedColumns;
-    // }, [columns]);
-
     return (
         <>
-            <div
-                className="main"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    height: '100%',
-                    overflow: 'auto',
-                    minWidth: '80vw'
-                }}
-            >
-                <DragDropContext onDragEnd={dragEnd}>
-                    {Object.entries(columns).map(
-                        ([columnId, column], index) => {
-                            return (
-                                <Column
-                                    key={columnId}
-                                    column={column}
-                                    columnId={columnId}
-                                    addItem={addItem}
-                                    changeColumnName={changeColumnName}
-                                />
-                            );
-                        }
-                    )}
-                </DragDropContext>
-                {/* <Button
-                    className="m-2"
-                    onClick={addColumn}
-                    style={{ maxHeight: '50px', whiteSpace: 'nowrap' }}
+            {columns ? (
+                <div
+                    className="main"
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'start',
+                        height: '100%',
+                        overflow: 'auto',
+                        minWidth: '80vw'
+                    }}
                 >
-                    Add Another List
-                </Button> */}
+                    <DragDropContext onDragEnd={dragEnd}>
+                        {Object.entries(columns).map(
+                            ([columnId, column], index) => {
+                                return (
+                                    <Column
+                                        key={columnId}
+                                        column={column}
+                                        columnId={columnId}
+                                        addTask={addTask}
+                                        changeColumnName={changeColumnName}
+                                    />
+                                );
+                            }
+                        )}
+                    </DragDropContext>
 
-                <AddColumn
-                    addColumn={addColumn}
-                    addingColumn={addingColumn}
-                    setAddingColumn={setAddingColumn}
-                />
-            </div>
+                    <AddColumn
+                        addColumn={addColumn}
+                        addingColumn={addingColumn}
+                        setAddingColumn={setAddingColumn}
+                    />
+                </div>
+            ) : null}
         </>
     );
 };

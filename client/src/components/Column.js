@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import AddItem from './AddItem';
 import Item from './Item';
+import { v4 as uuid } from 'uuid';
 
-const Column = ({ columnId, column, addItem, changeColumnName }) => {
+const Column = ({ columnId, column, addTask, changeColumnName }) => {
     const [addingItem, setAddingItem] = useState(false);
 
     return (
@@ -36,7 +37,7 @@ const Column = ({ columnId, column, addItem, changeColumnName }) => {
                     spellCheck={false}
                     className="font-size-1.2em"
                     maxLength="50"
-                    defaultValue={column.name}
+                    defaultValue={column.title}
                 />
                 <Droppable droppableId={columnId} key={columnId}>
                     {(provided, snapshot) => {
@@ -53,12 +54,12 @@ const Column = ({ columnId, column, addItem, changeColumnName }) => {
                                     borderRadius: '5px'
                                 }}
                             >
-                                {column.items.map((item, index) => {
+                                {column.tasks.map((task, index) => {
                                     return (
                                         <Item
-                                            item={item}
+                                            task={task}
                                             index={index}
-                                            key={item.id}
+                                            key={task.id}
                                         />
                                     );
                                 })}
@@ -69,7 +70,7 @@ const Column = ({ columnId, column, addItem, changeColumnName }) => {
                 </Droppable>
                 {addingItem ? (
                     <AddItem
-                        addItem={addItem}
+                        addTask={addTask}
                         columnId={columnId}
                         setAddingItem={setAddingItem}
                         addingItem={addingItem}
