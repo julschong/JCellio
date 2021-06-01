@@ -13,8 +13,6 @@ const taskRoute = require('./task.route');
 
 const boardRoute = express.Router();
 
-boardRoute.use('/:boardId/columns', columnRoute);
-boardRoute.use('/:boardId/columns/:columnId/tasks', taskRoute);
 boardRoute.use(authorization);
 
 boardRoute.route('/').get(getAllBoards).post(createNewBoard);

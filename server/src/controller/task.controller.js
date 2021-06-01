@@ -1,9 +1,11 @@
 const asyncHandler = require('express-async-handler');
 const prisma = require('../db/db');
+const ErrorResponse = require('../helper/errorResponse');
 const { column, task } = prisma;
 
 exports.getAllTaskByColumn = asyncHandler(async (req, res, next) => {
-    const columnId = req.params.columnId;
+    let columnId = req.query.columnId;
+    columnId = Number(columnId);
     const tasks = await task.findMany({
         where: {
             columnId: columnId
@@ -13,8 +15,13 @@ exports.getAllTaskByColumn = asyncHandler(async (req, res, next) => {
 });
 
 exports.addTask = asyncHandler(async (req, res, next) => {
-    const columnId = req.params.columnId;
-    const { name, description } = req.body;
+    let { name, description, columnId } = req.body;
+
+    if (!columnId) {
+        throw new ErrorResponse(400, `columnId is required`);
+    }
+
+    columnId = Number(columnId);
 
     const toUpdateColumn = await column.findUnique({ where: { id: columnId } });
 
@@ -35,10 +42,18 @@ exports.addTask = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteTask = asyncHandler(async (req, res, next) => {
-    const taskId = req.params.taskId;
-    const columnId = req.params.columnId;
+    const taskId = req.params.id;
 
-    const updateColumn = await column.findUnique({ where: { id: columnId } });
+    const taskToDelete = await task.findUnique({ where: { id: taskId } });
+    if (!taskToDelete) {
+        throw new ErrorResponse(400, `taskId: ${taskId} cannot be found`);
+    }
+
+    const columnId = taskToDelete.columnId;
+
+    const updateColumn = await column.findUnique({
+        where: { id: columnId }
+    });
 
     await column.update({
         where: { id: columnId },

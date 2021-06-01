@@ -9,7 +9,7 @@ const {
 const { authorization } = require('../middleware/authorization');
 const { idReformat } = require('../middleware/idReformat');
 
-const taskRoute = express.Router({ mergeParams: true });
+const taskRoute = express.Router();
 
 taskRoute
     .route('/')
@@ -17,7 +17,7 @@ taskRoute
     .get(idReformat, getAllTaskByColumn);
 
 taskRoute
-    .route('/:taskId')
+    .route('/:id')
     .get(idReformat, getOneTask)
     .delete(idReformat, deleteTask)
     .put(idReformat, updateTask);
