@@ -4,7 +4,7 @@ import AddItem from './AddItem';
 import Item from './Item';
 import { v4 as uuid } from 'uuid';
 
-const Column = ({ columnId, column, addTask, changeColumnName }) => {
+const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
     const [addingItem, setAddingItem] = useState(false);
 
     return (
@@ -39,7 +39,7 @@ const Column = ({ columnId, column, addTask, changeColumnName }) => {
                     maxLength="50"
                     defaultValue={column.title}
                 />
-                <Droppable droppableId={columnId} key={columnId}>
+                <Droppable droppableId={String(columnId)} key={columnId}>
                     {(provided, snapshot) => {
                         return (
                             <div
@@ -70,6 +70,7 @@ const Column = ({ columnId, column, addTask, changeColumnName }) => {
                 </Droppable>
                 {addingItem ? (
                     <AddItem
+                        pos={pos}
                         addTask={addTask}
                         columnId={columnId}
                         setAddingItem={setAddingItem}

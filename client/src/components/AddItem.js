@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
 
-const AddItem = ({ addTask, columnId, setAddingItem, addingItem }) => {
+const AddItem = ({ addTask, columnId, setAddingItem, addingItem, pos }) => {
     const text = useRef();
 
     return (
@@ -11,7 +11,7 @@ const AddItem = ({ addTask, columnId, setAddingItem, addingItem }) => {
                 if (e.target[0].value.trim() === '') {
                     return;
                 }
-                addTask(columnId, e.target[0].value.trim());
+                addTask(columnId, e.target[0].value.trim(), pos);
                 e.target[0].value = '';
                 setAddingItem(false);
             }}

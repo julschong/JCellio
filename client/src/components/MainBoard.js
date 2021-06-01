@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
-import { columnsFromBackend } from '../_data';
+// import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column';
 import { v4 as uuid } from 'uuid';
 import AddColumn from './AddColumn';
+import axios from 'axios';
+import { FETCH } from '../helper/url';
 
 const MainBoard = ({ data, selectedIndex }) => {
-    const [columns, setColumns] = useState();
+    const [columns, setColumns] = useState({ data: [], pos: [] });
     useEffect(() => {
         if (data) {
-            setColumns(data[selectedIndex].columns);
+            setColumns({
+                data: data[selectedIndex].columns,
+                pos: data[selectedIndex].colPos
+            });
         }
     }, [data, selectedIndex]);
     const [addingColumn, setAddingColumn] = useState(false);
@@ -55,13 +60,17 @@ const MainBoard = ({ data, selectedIndex }) => {
         }
     };
 
-    const addColumn = (name) => {
+    const addColumn = async (name) => {
         const newColumn = {
             tasks: [],
-            title: `${name}`
+            title: `${name}`,
+            boardId: columns.data.id
         };
+        const savedColumn = await axios.post(`${FETCH.BASE_URL}/columns`);
+
         setColumns((prev) => {
-            return { ...prev, [uuid()]: newColumn };
+            const newData = [...prev.data].push(savedColumn.data.data);
+            return { ...prev, data: newData };
         });
     };
     const changeColumnName = (columnId, newName) => {
@@ -73,19 +82,24 @@ const MainBoard = ({ data, selectedIndex }) => {
         });
     };
 
-    const addTask = (columnId, newTitle) => {
+    const addTask = async (columnId, newTitle) => {
         const newTask = {
             name: newTitle,
-            id: uuid()
+            columnId
         };
+
+        const savedTask = await axios.post(`${FETCH.BASE_URL}/tasks`, newTask);
+
         setColumns((prev) => {
-            return {
-                ...prev,
-                [columnId]: {
-                    ...prev[columnId],
-                    tasks: [...prev[columnId].tasks, newTask]
+            console.log(prev);
+            const newData = [];
+            for (const d of prev.data) {
+                if (d.id === columnId) {
+                    d.tasks.push(savedTask.data.data);
                 }
-            };
+                newData.push(d);
+            }
+            return { ...prev, data: newData };
         });
     };
 
@@ -103,19 +117,22 @@ const MainBoard = ({ data, selectedIndex }) => {
                     }}
                 >
                     <DragDropContext onDragEnd={dragEnd}>
-                        {Object.entries(columns).map(
-                            ([columnId, column], index) => {
-                                return (
-                                    <Column
-                                        key={columnId}
-                                        column={column}
-                                        columnId={columnId}
-                                        addTask={addTask}
-                                        changeColumnName={changeColumnName}
-                                    />
-                                );
-                            }
-                        )}
+                        {columns.pos.map((pos, index) => {
+                            const column = columns.data.find(
+                                (col) => col.id === pos
+                            );
+                            const columnId = column.id;
+                            return (
+                                <Column
+                                    pos={index}
+                                    key={String(columnId)}
+                                    column={column}
+                                    columnId={columnId}
+                                    addTask={addTask}
+                                    changeColumnName={changeColumnName}
+                                />
+                            );
+                        })}
                     </DragDropContext>
 
                     <AddColumn
