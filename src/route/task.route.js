@@ -3,7 +3,8 @@ const {
     addTask,
     getAllTaskByColumn,
     deleteTask,
-    getOneTask
+    getOneTask,
+    updateTask
 } = require('../controller/task.controller');
 const { authorization } = require('../middleware/authorization');
 const { idReformat } = require('../middleware/idReformat');
@@ -18,6 +19,7 @@ taskRoute
 taskRoute
     .route('/:taskId')
     .get(idReformat, getOneTask)
-    .delete(idReformat, deleteTask);
+    .delete(idReformat, deleteTask)
+    .put(idReformat, updateTask);
 
 module.exports = taskRoute;

@@ -19,7 +19,9 @@ exports.getAllBoards = asyncHandler(async (req, res, next) => {
 });
 
 exports.createNewBoard = asyncHandler(async (req, res, next) => {
-    const newBoard = await board.create({ data: { userId: req.info.id } });
+    const newBoard = await board.create({
+        data: { userId: req.info.id, ...req.body }
+    });
     res.status(201).json({ success: true, data: newBoard });
 });
 

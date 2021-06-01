@@ -26,7 +26,6 @@ model Board {
   updatedAt   DateTime @updatedAt
   user        User?    @relation(fields: [userId], references: [id])
   columns     Column[]
-
 }
 
 model Column {
@@ -36,8 +35,10 @@ model Column {
   description String?
   title       String?
   updatedAt   DateTime @updatedAt
+  index       Int?
   board       Board?   @relation(fields: [boardId], references: [id])
   tasks       Task[]
+  taskPos     Int[]
 }
 
 model Task {
