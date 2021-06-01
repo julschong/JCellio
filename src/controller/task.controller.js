@@ -5,7 +5,7 @@ const { column, task } = prisma;
 
 exports.getAllTaskByColumn = asyncHandler(async (req, res, next) => {
     let columnId = req.query.columnId;
-    columnId = Number(columnId);
+    columnId = columnId ? Number(columnId) : undefined;
     const tasks = await task.findMany({
         where: {
             columnId: columnId
