@@ -9,10 +9,7 @@ import MainBoard from './MainBoard';
 const DashBoard = () => {
     const [token] = useLocalStorage('token');
 
-    const { data, loading, error } = useFetch(
-        `${FETCH.BASE_URL}/boards`,
-        token
-    );
+    const { data, loading } = useFetch(`${FETCH.BASE_URL}/boards`, token);
 
     const [selection, setSelection] = useState({
         selectedIndex: 0,

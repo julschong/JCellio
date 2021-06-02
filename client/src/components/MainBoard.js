@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 // import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column';
-import { v4 as uuid } from 'uuid';
 import AddColumn from './AddColumn';
 import axios from 'axios';
 import { FETCH } from '../helper/url';
+import ColumnService from '../services/columnService';
 
 const MainBoard = ({ data, selectedIndex }) => {
     const [columns, setColumns] = useState({ data: [], pos: [] });
@@ -30,47 +30,47 @@ const MainBoard = ({ data, selectedIndex }) => {
             ) {
                 return;
             }
-            setColumns((prev) => {
-                const sourceItems = Array.from(prev[source.droppableId].tasks);
-                let destinationItems = Array.from(
-                    prev[destination.droppableId].tasks
-                );
+            // setColumns((prev) => {
+            //     const sourceItems = Array.from(prev[source.droppableId].tasks);
+            //     let destinationItems = Array.from(
+            //         prev[destination.droppableId].tasks
+            //     );
 
-                const itemMoved = sourceItems.splice(source.index, 1);
+            //     const itemMoved = sourceItems.splice(source.index, 1);
 
-                if (destination.droppableId === source.droppableId) {
-                    destinationItems = [...sourceItems];
-                    destinationItems.splice(destination.index, 0, itemMoved[0]);
-                } else {
-                    destinationItems.splice(destination.index, 0, itemMoved[0]);
-                }
+            //     if (destination.droppableId === source.droppableId) {
+            //         destinationItems = [...sourceItems];
+            //         destinationItems.splice(destination.index, 0, itemMoved[0]);
+            //     } else {
+            //         destinationItems.splice(destination.index, 0, itemMoved[0]);
+            //     }
 
-                return {
-                    ...prev,
-                    [source.droppableId]: {
-                        ...prev[source.droppableId],
-                        tasks: sourceItems
-                    },
-                    [destination.droppableId]: {
-                        ...prev[destination.droppableId],
-                        tasks: destinationItems
-                    }
-                };
-            });
+            //     return {
+            //         ...prev,
+            //         [source.droppableId]: {
+            //             ...prev[source.droppableId],
+            //             tasks: sourceItems
+            //         },
+            //         [destination.droppableId]: {
+            //             ...prev[destination.droppableId],
+            //             tasks: destinationItems
+            //         }
+            //     };
+            // });
         }
     };
 
     const addColumn = async (name) => {
         const newColumn = {
-            tasks: [],
             title: `${name}`,
-            boardId: columns.data.id
+            boardId: data[selectedIndex].id
         };
-        const savedColumn = await axios.post(`${FETCH.BASE_URL}/columns`);
+        const savedColumn = await ColumnService.addColumn(newColumn);
 
         setColumns((prev) => {
-            const newData = [...prev.data].push(savedColumn.data.data);
-            return { ...prev, data: newData };
+            const newData = [...prev.data, savedColumn.data];
+            const newPos = [...prev.pos, savedColumn.data.id];
+            return { pos: newPos, data: newData };
         });
     };
     const changeColumnName = (columnId, newName) => {

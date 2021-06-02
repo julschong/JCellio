@@ -9,7 +9,7 @@ const Login = ({ setToken, authed }) => {
     const [error, setError] = useState('');
 
     return (
-        <div className="container w-25 mt-2">
+        <div className="form container w-25 mt-2">
             {!authed ? (
                 <>
                     <h2>Login</h2>
@@ -57,7 +57,8 @@ const Login = ({ setToken, authed }) => {
                                 })
                                 .catch((err) =>
                                     setError(err.response.data.error)
-                                );
+                                )
+                                .finally(setSubmitting(false));
                         }}
                     >
                         {({
@@ -131,7 +132,7 @@ const Login = ({ setToken, authed }) => {
                     </Formik>
                 </>
             ) : (
-                <p>logged in as {authed.name}</p>
+                <p className="fs-2">logged in as {authed.name}</p>
             )}
         </div>
     );

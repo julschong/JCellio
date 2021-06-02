@@ -8,6 +8,8 @@
 *::before {
     box-sizing: border-box;
     user-select: none;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -128,4 +130,10 @@ main {
     width: 100%;
     background-color: transparent;
     border: none;
+}
+
+.form {
+    background-color: aliceblue;
+    padding: 50px;
+    border-radius: 1em;
 }

@@ -9,7 +9,7 @@ const Register = () => {
     const [error, setError] = useState('');
 
     return (
-        <div className="container w-25 mt-2">
+        <div className="form container w-25 mt-2">
             <h2>Register</h2>
             {error === '' ? null : <Alert color="danger">{error}</Alert>}
             <Formik

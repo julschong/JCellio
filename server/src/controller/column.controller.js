@@ -50,7 +50,8 @@ exports.addColumn = asyncHandler(async (req, res, next) => {
             title,
             description,
             boardId
-        }
+        },
+        include: { tasks: true }
     });
 
     await board.update({
