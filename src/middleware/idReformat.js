@@ -2,11 +2,11 @@ const ErrorResponse = require('../helper/errorResponse');
 
 exports.idReformat = (req, res, next) => {
     if (req.params.id) {
-        try {
-            req.params.id = Number(req.params.id);
-        } catch (error) {
-            throw new ErrorResponse(400, 'Malformed id');
+        const transformed = Number(req.params.id);
+        if (isNaN(transformed)) {
+            throw new ErrorResponse(400, `Malformed id: ${req.params.id}`);
         }
+        req.params.id = transformed;
     }
 
     if (req.params.boardId) {

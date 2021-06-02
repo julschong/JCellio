@@ -3,7 +3,8 @@ const {
     addColumn,
     getColumns,
     deleteColumn,
-    getOneColumnById
+    getOneColumnById,
+    updateColumn
 } = require('../controller/column.controller');
 const { authorization } = require('../middleware/authorization');
 const { idReformat } = require('../middleware/idReformat');
@@ -15,6 +16,7 @@ columnRoute.route('/').get(idReformat, getColumns).post(idReformat, addColumn);
 columnRoute
     .route('/:id')
     .get(idReformat, getOneColumnById)
-    .delete(idReformat, deleteColumn);
+    .delete(idReformat, deleteColumn)
+    .put(idReformat, updateColumn);
 
 module.exports = columnRoute;

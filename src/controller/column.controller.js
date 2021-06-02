@@ -5,8 +5,11 @@ const { board, column } = prisma;
 
 exports.getColumns = asyncHandler(async (req, res, next) => {
     const { boardId } = req.query;
+
     const columns = await column.findMany({
-        where: { boardId: Number(boardId) },
+        where: {
+            boardId: Number(boardId) ? Number(boardId) : undefined
+        },
         include: { tasks: true }
     });
     res.status(200).json({ success: true, data: columns });
@@ -14,6 +17,7 @@ exports.getColumns = asyncHandler(async (req, res, next) => {
 
 exports.getOneColumnById = asyncHandler(async (req, res, next) => {
     const columnId = req.params.id;
+
     const foundColumn = await column.findUnique({
         where: { id: columnId },
         include: { tasks: true }
@@ -85,4 +89,24 @@ exports.deleteColumn = asyncHandler(async (req, res, next) => {
     await column.delete({ where: { id: req.params.id } });
 
     res.status(200).json({ success: true, data: [] });
+});
+
+exports.updateColumn = asyncHandler(async (req, res, next) => {
+    const columnToUpdate = await column.findUnique({
+        where: { id: req.params.id }
+    });
+
+    if (!columnToUpdate) {
+        throw new ErrorResponse(
+            400,
+            `Column id: ${req.params.id} cannot be found`
+        );
+    }
+
+    const updated = await column.update({
+        where: { id: req.params.id },
+        data: { ...req.body }
+    });
+
+    res.status(200).json({ success: true, data: updated });
 });
