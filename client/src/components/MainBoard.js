@@ -6,6 +6,7 @@ import AddColumn from './AddColumn';
 import axios from 'axios';
 import { FETCH } from '../helper/url';
 import ColumnService from '../services/columnService';
+import taskService from '../services/taskService';
 
 const MainBoard = ({ data, selectedIndex }) => {
     const [columns, setColumns] = useState({ data: [], pos: [] });
@@ -19,10 +20,8 @@ const MainBoard = ({ data, selectedIndex }) => {
     }, [data, selectedIndex]);
     const [addingColumn, setAddingColumn] = useState(false);
 
-    const dragEnd = (result) => {
+    const dragEnd = async (result) => {
         const { source, destination } = result;
-        console.log(result);
-
         if (destination) {
             if (
                 source.droppableId === destination.droppableId &&
@@ -30,33 +29,56 @@ const MainBoard = ({ data, selectedIndex }) => {
             ) {
                 return;
             }
-            // setColumns((prev) => {
-            //     const sourceItems = Array.from(prev[source.droppableId].tasks);
-            //     let destinationItems = Array.from(
-            //         prev[destination.droppableId].tasks
-            //     );
+            setColumns((prev) => {
+                const srcCol = {
+                    ...prev.data.find(
+                        (column) => column.id === Number(source.droppableId)
+                    )
+                };
+                const task = {
+                    ...srcCol.tasks.find(
+                        (task) => task.id === Number(result.draggableId)
+                    )
+                };
+                task.columnId = Number(destination.droppableId);
 
-            //     const itemMoved = sourceItems.splice(source.index, 1);
+                let destCol = {
+                    ...prev.data.find(
+                        (column) =>
+                            column.id === Number(destination.droppableId)
+                    )
+                };
 
-            //     if (destination.droppableId === source.droppableId) {
-            //         destinationItems = [...sourceItems];
-            //         destinationItems.splice(destination.index, 0, itemMoved[0]);
-            //     } else {
-            //         destinationItems.splice(destination.index, 0, itemMoved[0]);
-            //     }
+                srcCol.tasks = srcCol.tasks.filter(
+                    (task) => task.id !== Number(result.draggableId)
+                );
+                srcCol.taskPos = srcCol.taskPos.filter(
+                    (id) => id !== Number(result.draggableId)
+                );
 
-            //     return {
-            //         ...prev,
-            //         [source.droppableId]: {
-            //             ...prev[source.droppableId],
-            //             tasks: sourceItems
-            //         },
-            //         [destination.droppableId]: {
-            //             ...prev[destination.droppableId],
-            //             tasks: destinationItems
-            //         }
-            //     };
-            // });
+                if (srcCol.id === destCol.id) {
+                    destCol = srcCol;
+                }
+
+                destCol.tasks.push(task);
+                destCol.taskPos.splice(destination.index, 0, task.id);
+
+                const newData = [...prev.data].map((column) => {
+                    if (column.id === destCol.id) {
+                        return destCol;
+                    } else if (column.id === srcCol.id) {
+                        return srcCol;
+                    }
+                    return column;
+                });
+
+                return { ...prev, data: newData };
+            });
+            taskService.swapTaskPos(
+                Number(result.draggableId),
+                Number(destination.droppableId),
+                destination.index
+            );
         }
     };
 
@@ -91,11 +113,11 @@ const MainBoard = ({ data, selectedIndex }) => {
         const savedTask = await axios.post(`${FETCH.BASE_URL}/tasks`, newTask);
 
         setColumns((prev) => {
-            console.log(prev);
             const newData = [];
             for (const d of prev.data) {
                 if (d.id === columnId) {
                     d.tasks.push(savedTask.data.data);
+                    d.taskPos.push(savedTask.data.data.id);
                 }
                 newData.push(d);
             }

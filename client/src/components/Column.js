@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import AddItem from './AddItem';
 import Item from './Item';
-import { v4 as uuid } from 'uuid';
 
 const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
     const [addingItem, setAddingItem] = useState(false);
@@ -39,7 +38,10 @@ const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
                     maxLength="50"
                     defaultValue={column.title}
                 />
-                <Droppable droppableId={String(columnId)} key={columnId}>
+                <Droppable
+                    droppableId={String(columnId)}
+                    key={columnId + column.title}
+                >
                     {(provided, snapshot) => {
                         return (
                             <div
@@ -54,12 +56,22 @@ const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
                                     borderRadius: '5px'
                                 }}
                             >
-                                {column.tasks.map((task, index) => {
+                                {column.taskPos.map((pos, index) => {
+                                    let task = column.tasks.find(
+                                        (task) => task.id === pos
+                                    );
+                                    if (!task) {
+                                        console.log('POS ' + pos);
+                                        console.log('INDEX ' + index);
+                                    }
+                                    const taskId = task ? task.id : null;
+
                                     return (
                                         <Item
                                             task={task}
+                                            taskId={taskId}
                                             index={index}
-                                            key={task.id}
+                                            key={taskId}
                                         />
                                     );
                                 })}

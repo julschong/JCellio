@@ -1,8 +1,8 @@
 import { Draggable } from 'react-beautiful-dnd';
 
-const Item = ({ task, index }) => {
+const Item = ({ task, index, taskId }) => {
     return (
-        <Draggable draggableId={String(task.id)} index={index}>
+        <Draggable draggableId={String(taskId)} index={index} key={taskId}>
             {(provided, snapshot) => {
                 return (
                     <div
@@ -23,7 +23,8 @@ const Item = ({ task, index }) => {
                             ...provided.draggableProps.style
                         }}
                     >
-                        {task.name}
+                        {task ? task.name : null}
+                        {'      ID  ' + taskId}
                     </div>
                 );
             }}
