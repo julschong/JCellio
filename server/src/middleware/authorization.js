@@ -9,7 +9,7 @@ exports.authorization = asyncHandler(async (req, res, next) => {
         throw new ErrorResponse(401, 'User not logged in');
     }
 
-    token = token.replace(/^([bB]earer[=\w])/, '');
+    token = token.replace(/^([bB]earer[=\s])/, '');
 
     try {
         const info = jwt.verify(token, process.env.SECRET);

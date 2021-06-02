@@ -81,41 +81,34 @@ exports.getOneTask = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateTask = asyncHandler(async (req, res, next) => {
-    const columnId = req.params.columnId;
-    const { col, index } = req.query;
-    const taskId = req.params.taskId;
+    const { destColId, pos } = req.body;
+    const taskId = req.params.id;
 
-    if (col && index) {
-        const srcColumn = await column.findUnique({ where: { id: columnId } });
-        await column.update({
-            where: { id: columnId },
-            data: {
-                taskPos: [...srcColumn.taskPos].filter((pos) => pos !== taskId)
-            }
-        });
-
-        const destColumn = await column.findUnique({
-            where: { id: Number(col) }
-        });
-
-        const newTaskPos = destColumn.taskPos.filter((pos) => pos !== taskId);
-
-        newTaskPos.splice(Number(index), 0, taskId);
-
-        await column.update({
-            where: { id: Number(col) },
-            data: { taskPos: newTaskPos }
-        });
+    if (destColId === undefined || pos === undefined) {
+        throw new ErrorResponse(400, `destColId and pos are required in body`);
     }
 
-    const updatedTask = await task.update({
-        where: {
-            id: taskId
-        },
-        data: {
-            ...req.body,
-            columnId: col ? Number(col) : undefined
-        }
+    const taskToMove = await task.findUnique({ where: { id: taskId } });
+
+    const srcColId = taskToMove.columnId;
+
+    const scrCol = await column.findUnique({ where: { id: srcColId } });
+    await column.update({
+        where: { id: srcColId },
+        data: { taskPos: scrCol.taskPos.filter((pos) => pos !== taskId) }
     });
+
+    const destCol = await column.findUnique({ where: { id: destColId } });
+    destCol.taskPos.splice(pos, 0, taskId);
+    await column.update({
+        where: { id: destColId },
+        data: { taskPos: destCol.taskPos }
+    });
+
+    const updatedTask = await task.update({
+        where: { id: taskId },
+        data: { columnId: destColId }
+    });
+
     res.status(200).json({ success: true, data: updatedTask });
 });
