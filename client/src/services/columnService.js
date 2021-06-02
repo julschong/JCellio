@@ -9,8 +9,17 @@ const addColumn = async (newColumnTitle) => {
     return savedColumn.data;
 };
 
+const changeColumnName = async (columnId, newTitle) => {
+    const savedColumn = await axios.put(
+        `${FETCH.BASE_URL}/columns/${columnId}`,
+        { title: newTitle }
+    );
+    return savedColumn.data;
+};
+
 const ColumnService = {
-    addColumn
+    addColumn,
+    changeColumnName
 };
 
 export default ColumnService;

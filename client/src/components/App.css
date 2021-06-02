@@ -46,6 +46,7 @@ main {
 
 .columns textarea,
 .add-column textarea {
+    user-select: auto;
     cursor: pointer;
     background-color: transparent;
     overflow: hidden;
@@ -54,7 +55,7 @@ main {
     outline: none;
     border: none;
     height: auto;
-    padding: 0;
+    padding: 5px;
     margin: 0;
     width: 100%;
     transition: boxshadow 0.5s;

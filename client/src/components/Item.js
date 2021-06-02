@@ -4,6 +4,11 @@ const Item = ({ task, index, taskId }) => {
     return (
         <Draggable draggableId={String(taskId)} index={index} key={taskId}>
             {(provided, snapshot) => {
+                const formattedTaskName = task
+                    ? task.name.length < 30
+                        ? task.name
+                        : task.name.substring(0, 20) + '...'
+                    : null;
                 return (
                     <div
                         className="item"
@@ -23,8 +28,10 @@ const Item = ({ task, index, taskId }) => {
                             ...provided.draggableProps.style
                         }}
                     >
-                        {task ? task.name : null}
-                        {'      ID  ' + taskId}
+                        <span className="text-break">
+                            {formattedTaskName}
+                            {'      ID  ' + taskId}
+                        </span>
                     </div>
                 );
             }}

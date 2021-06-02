@@ -94,14 +94,24 @@ const MainBoard = ({ data, selectedIndex }) => {
             const newPos = [...prev.pos, savedColumn.data.id];
             return { pos: newPos, data: newData };
         });
+        setAddingColumn(false);
     };
-    const changeColumnName = (columnId, newName) => {
+    const changeColumnName = async (columnId, newName) => {
         setColumns((prev) => {
+            const newColumn = {
+                ...prev.data.find((column) => column.id === columnId)
+            };
+            newColumn.name = newName;
+            const newData = [
+                ...prev.data.filter((column) => column.id !== columnId),
+                newColumn
+            ];
             return {
                 ...prev,
-                [columnId]: { ...prev[columnId], title: newName }
+                data: newData
             };
         });
+        await ColumnService.changeColumnName(columnId, newName);
     };
 
     const addTask = async (columnId, newTitle) => {

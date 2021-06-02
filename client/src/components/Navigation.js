@@ -2,7 +2,12 @@ import { Button, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
 
 const Navigation = ({ token, setToken, authed }) => {
     return (
-        <Navbar style={{ backgroundColor: 'rgba(0,0,0,0.3)' }}>
+        <Navbar
+            style={{
+                backgroundColor: 'rgba(0,0,0,0.3)',
+                paddingInline: '30px'
+            }}
+        >
             <NavbarBrand>JulsChong</NavbarBrand>
             <Nav
                 className="mr-auto d-flex flex-nowrap flex-row flex-grow-1 flex-gap-1"

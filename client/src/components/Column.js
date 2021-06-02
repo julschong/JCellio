@@ -31,7 +31,9 @@ const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
                         }
                     }}
                     onBlur={(e) => {
-                        changeColumnName(columnId, e.target.value);
+                        if (column.name !== e.target.value) {
+                            changeColumnName(columnId, e.target.value);
+                        }
                     }}
                     spellCheck={false}
                     className="font-size-1.2em"
