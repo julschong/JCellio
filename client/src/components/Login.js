@@ -9,7 +9,7 @@ const Login = ({ setToken, authed }) => {
     const [error, setError] = useState('');
 
     return (
-        <div className="form container w-25 mt-2">
+        <div className="form container w-25 mt-5">
             {!authed ? (
                 <>
                     <h2>Login</h2>

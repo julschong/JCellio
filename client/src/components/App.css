@@ -3,6 +3,10 @@
     gap: 1%;
 }
 
+:root {
+    --primary-color-light: #0c2249;
+}
+
 *,
 *::after,
 *::before {
@@ -13,7 +17,7 @@
 }
 
 body {
-    background-image: url('https://images.unsplash.com/photo-1514454529242-9e4677563e7b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+    background-color: var(--primary-color-light);
     background-size: cover;
     font-family: 'Roboto', sans-serif;
 }

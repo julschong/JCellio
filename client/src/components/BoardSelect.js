@@ -13,7 +13,10 @@ const BoardSelect = ({ selection, setSelection, data }) => {
                     left: 5,
                     zIndex: 10,
                     display: 'visible',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    backgroundColor: 'rgba(255,255,255,0.2)',
+                    padding: '3px',
+                    borderRadius: '5%'
                 }}
                 onClick={() =>
                     setSelection((prev) => {
