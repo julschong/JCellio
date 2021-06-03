@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import { Alert, Button, Input, Label } from 'reactstrap';
+import { FETCH } from '../helper/url';
 
 const Login = ({ setToken, authed }) => {
     const history = useHistory();
@@ -43,10 +44,7 @@ const Login = ({ setToken, authed }) => {
                         onSubmit={(values, { setSubmitting }) => {
                             setSubmitting(true);
                             axios
-                                .post(
-                                    'http://localhost:3003/api/v1/auth/login',
-                                    values
-                                )
+                                .post(`${FETCH.BASE_URL}/auth/login`, values)
                                 .then((res) => {
                                     if (res.data.success) {
                                         setToken('bearer=' + res.data.token);

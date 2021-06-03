@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import { Alert, Button, Form, Input, Label } from 'reactstrap';
+import { FETCH } from '../helper/url';
 
 const Register = () => {
     const history = useHistory();
@@ -47,10 +48,7 @@ const Register = () => {
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true);
                     axios
-                        .post(
-                            'http://localhost:3003/api/v1/auth/register',
-                            values
-                        )
+                        .post(`${FETCH.BASE_URL}/auth/register`, values)
                         .then((res) => {
                             if (res.data.success) {
                                 // setToken('bearer=' + res.data.token);
