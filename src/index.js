@@ -1,5 +1,5 @@
 const express = require('express');
-const morgan = require('morgan');
+
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -7,7 +7,12 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-app.use(morgan('dev'));
+
+if (process.env.NODE_ENV === 'dev') {
+    const morgan = require('morgan');
+    app.use(morgan('dev'));
+}
+
 app.use(cors());
 
 const boardRoute = require('./route/board.route');
