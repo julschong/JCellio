@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column';
@@ -19,6 +19,7 @@ const MainBoard = ({ data, selectedIndex }) => {
         }
     }, [data, selectedIndex]);
     const [addingColumn, setAddingColumn] = useState(false);
+    const scrollToEnd = useRef();
 
     const dragEnd = async (result) => {
         const { source, destination } = result;
@@ -95,6 +96,7 @@ const MainBoard = ({ data, selectedIndex }) => {
             return { pos: newPos, data: newData };
         });
         setAddingColumn(false);
+        scrollToEnd.current.scrollIntoView({ behavior: 'smooth' });
     };
     const changeColumnName = async (columnId, newName) => {
         setColumns((prev) => {
@@ -172,6 +174,7 @@ const MainBoard = ({ data, selectedIndex }) => {
                         addingColumn={addingColumn}
                         setAddingColumn={setAddingColumn}
                     />
+                    <div ref={scrollToEnd} />
                 </div>
             ) : null}
         </>
