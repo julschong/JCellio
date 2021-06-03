@@ -8,15 +8,12 @@ const Navigation = ({ token, setToken, authed }) => {
                 paddingInline: '30px'
             }}
         >
-            <NavbarBrand>JulsChong</NavbarBrand>
+            <h1>JCellio</h1>
             <Nav
                 className="mr-auto d-flex flex-nowrap flex-row flex-grow-1 flex-gap-1"
                 style={{ color: 'white' }}
                 navbar
             >
-                <NavItem>
-                    <NavLink href="/">Home</NavLink>
-                </NavItem>
                 <NavItem>
                     <NavLink href="/dashboard">Dashboard</NavLink>
                 </NavItem>

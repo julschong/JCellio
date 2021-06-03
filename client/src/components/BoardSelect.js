@@ -1,6 +1,10 @@
 import React from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import BoardService from '../services/boardService';
 
-const BoardSelect = ({ selection, setSelection, data }) => {
+const BoardSelect = ({ selection, setSelection, data, refetch }) => {
+    const [token] = useLocalStorage('token');
+
     const toggleVisible = selection.visible
         ? { transform: 'translateX(0px)', zIndex: 5 }
         : { zIndex: -1 };
@@ -18,11 +22,11 @@ const BoardSelect = ({ selection, setSelection, data }) => {
                     padding: '3px',
                     borderRadius: '5%'
                 }}
-                onClick={() =>
+                onClick={() => {
                     setSelection((prev) => {
                         return { ...prev, visible: !prev.visible };
-                    })
-                }
+                    });
+                }}
                 src="../assets/menuX32.png"
                 alt="menu"
             ></img>
@@ -48,6 +52,26 @@ const BoardSelect = ({ selection, setSelection, data }) => {
                           ))
                         : null}
                 </ul>
+                <form
+                    onSubmit={async (e) => {
+                        e.preventDefault();
+                        if (e.target[0].value.trim().length > 0 && token)
+                            await BoardService.addBoard(
+                                e.target[0].value.trim(),
+                                token
+                            );
+                        e.target[0].value = '';
+                        refetch();
+                    }}
+                >
+                    <textarea
+                        name="title"
+                        placeholder="new board title..."
+                        rows="1"
+                        spellCheck={false}
+                    />
+                    <button type="submit">Add a new board</button>
+                </form>
             </div>
         </>
     );

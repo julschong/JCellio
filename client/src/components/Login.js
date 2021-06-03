@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import { Alert } from 'reactstrap';
+import { Alert, Button, Input, Label } from 'reactstrap';
 
 const Login = ({ setToken, authed }) => {
     const history = useHistory();
@@ -75,10 +75,10 @@ const Login = ({ setToken, authed }) => {
                                 className="d-flex flex-column gap-2"
                                 onSubmit={handleSubmit}
                             >
-                                <label className="fs-4" htmlFor="email">
+                                <Label className="fs-4" htmlFor="email">
                                     Email
-                                </label>
-                                <input
+                                </Label>
+                                <Input
                                     type="email"
                                     name="email"
                                     onChange={handleChange}
@@ -92,10 +92,10 @@ const Login = ({ setToken, authed }) => {
                                         errors.email}
                                 </p>
 
-                                <label className="fs-4" htmlFor="password">
+                                <Label className="fs-4" htmlFor="password">
                                     Password
-                                </label>
-                                <input
+                                </Label>
+                                <Input
                                     type="password"
                                     name="password"
                                     onChange={handleChange}
@@ -110,14 +110,16 @@ const Login = ({ setToken, authed }) => {
                                 </p>
 
                                 <div className="d-flex gap-1">
-                                    <button
+                                    <Button
+                                        color="primary"
                                         className="w-50"
                                         type="submit"
                                         disabled={isSubmitting}
                                     >
                                         Login
-                                    </button>
-                                    <button
+                                    </Button>
+                                    <Button
+                                        color="secondary"
                                         className="w-50"
                                         onClick={() =>
                                             history.push('/register')
@@ -125,7 +127,7 @@ const Login = ({ setToken, authed }) => {
                                         disabled={isSubmitting}
                                     >
                                         Register
-                                    </button>
+                                    </Button>
                                 </div>
                             </form>
                         )}

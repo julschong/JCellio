@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import { Alert } from 'reactstrap';
+import { Alert, Button, Form, Input, Label } from 'reactstrap';
 
 const Register = () => {
     const history = useHistory();
@@ -72,14 +72,14 @@ const Register = () => {
                     isSubmitting
                     /* and other goodies */
                 }) => (
-                    <form
+                    <Form
                         className="d-flex flex-column gap-2"
                         onSubmit={handleSubmit}
                     >
-                        <label className="fs-4" htmlFor="name">
+                        <Label className="fs-4" htmlFor="name">
                             Name
-                        </label>
-                        <input
+                        </Label>
+                        <Input
                             type="name"
                             name="name"
                             onChange={handleChange}
@@ -92,10 +92,10 @@ const Register = () => {
                             {errors.name && touched.name && errors.name}
                         </p>
 
-                        <label className="fs-4" htmlFor="email">
+                        <Label className="fs-4" htmlFor="email">
                             Email
-                        </label>
-                        <input
+                        </Label>
+                        <Input
                             type="email"
                             name="email"
                             onChange={handleChange}
@@ -107,10 +107,10 @@ const Register = () => {
                             {errors.email && touched.email && errors.email}
                         </p>
 
-                        <label className="fs-4" htmlFor="password">
+                        <Label className="fs-4" htmlFor="password">
                             Password
-                        </label>
-                        <input
+                        </Label>
+                        <Input
                             type="password"
                             name="password"
                             onChange={handleChange}
@@ -123,11 +123,25 @@ const Register = () => {
                                 touched.password &&
                                 errors.password}
                         </p>
-
-                        <button type="submit" disabled={isSubmitting}>
-                            Register
-                        </button>
-                    </form>
+                        <div className="d-flex gap-1">
+                            <Button
+                                className="flex-grow-1 w-50"
+                                color="primary"
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
+                                Register
+                            </Button>
+                            <Button
+                                className="flex-grow-1 w-50"
+                                color="secondary"
+                                onClick={() => history.push('/login')}
+                                disabled={isSubmitting}
+                            >
+                                Back to Login
+                            </Button>
+                        </div>
+                    </Form>
                 )}
             </Formik>
         </div>

@@ -24,3 +24,5 @@ yarn-error.log*
 
 client/public/env.js
 client/public/env.js
+client/build/env.js
+server/build/env.js

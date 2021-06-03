@@ -11,7 +11,7 @@ import taskService from '../services/taskService';
 const MainBoard = ({ data, selectedIndex }) => {
     const [columns, setColumns] = useState({ data: [], pos: [] });
     useEffect(() => {
-        if (data) {
+        if (data && data.length > 0) {
             setColumns({
                 data: data[selectedIndex].columns,
                 pos: data[selectedIndex].colPos
