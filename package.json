@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev nodemon ./src/index.js",
-    "web-start": "NODE_ENV=prod node ./src/index.js"
+    "web-start": "node ./src/index.js"
   },
   "keywords": [],
   "author": "Julius Lee",
