@@ -25,7 +25,10 @@ const App = () => {
 
     const authed = useMemo(() => {
         if (token) {
-            return jwt.verify(token.replace(/^[Bb]earer[\w=]/, ''), env.SECRET);
+            return jwt.verify(
+                token.replace(/^[Bb]earer[\w=]/, ''),
+                process.env.REACT_APP_SECRET
+            );
         }
 
         return token !== null;
