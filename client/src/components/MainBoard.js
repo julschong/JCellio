@@ -1,12 +1,12 @@
+import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 // import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
-import Column from './Column';
-import AddColumn from './AddColumn';
-import axios from 'axios';
 import { FETCH } from '../helper/url';
 import ColumnService from '../services/columnService';
 import taskService from '../services/taskService';
+import AddColumn from './AddColumn';
+import Column from './Column';
 
 const MainBoard = ({ data, selectedIndex }) => {
     const [columns, setColumns] = useState({ data: [], pos: [] });
@@ -139,7 +139,7 @@ const MainBoard = ({ data, selectedIndex }) => {
 
     return (
         <>
-            {columns && columns.length > 0 ? (
+            {columns && data ? (
                 <div
                     className="main"
                     style={{
