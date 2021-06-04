@@ -2,6 +2,7 @@ const express = require('express');
 
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
+const ipRestrict = require('./middleware/ipRestrict');
 
 require('dotenv').config();
 
@@ -19,6 +20,8 @@ const boardRoute = require('./route/board.route');
 const authRoute = require('./route/auth.route');
 const columnRoute = require('./route/column.route');
 const taskRoute = require('./route/task.route');
+
+app.use(ipRestrict);
 
 app.get('/', (req, res, next) => {
     res.send('hello');
