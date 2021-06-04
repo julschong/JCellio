@@ -139,7 +139,7 @@ const MainBoard = ({ data, selectedIndex }) => {
 
     return (
         <>
-            {columns && data ? (
+            {columns && data.length > 0 ? (
                 <div
                     className="main"
                     style={{
