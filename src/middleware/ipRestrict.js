@@ -8,7 +8,6 @@ const ipRestrict = (req, res, next) => {
     )
         .split(',')[0]
         .trim();
-    console.log(ip);
     // if (
     //     process.env.NODE_ENV === 'production' &&
     //     !req.headers.fwd.contains('julschong')
