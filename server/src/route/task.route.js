@@ -11,6 +11,8 @@ const { idReformat } = require('../middleware/idReformat');
 
 const taskRoute = express.Router();
 
+taskRoute.use(authorization);
+
 taskRoute
     .route('/')
     .post(idReformat, addTask)

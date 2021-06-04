@@ -4,7 +4,6 @@ const ErrorResponse = require('../helper/errorResponse');
 
 exports.authorization = asyncHandler(async (req, res, next) => {
     let token = req.headers.authorization;
-    console.log(token);
     if (!token) {
         throw new ErrorResponse(401, 'User not logged in');
     }

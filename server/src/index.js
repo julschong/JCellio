@@ -4,7 +4,7 @@ const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 const ipRestrict = require('./middleware/ipRestrict');
 
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/../.env' });
 
 const app = express();
 app.use(express.json());
@@ -37,6 +37,8 @@ app.use(errorHandler);
 app.listen(
     process.env.PORT || 3003,
     console.log(
-        `server running on ${process.env.NODE_ENV} mode on port ${process.env.PORT}`
+        `server running on ${process.env.NODE_ENV} mode on port ${
+            process.env.PORT || 3003
+        }`
     )
 );
