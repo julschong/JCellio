@@ -1,4 +1,4 @@
-import { Button, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
+import { Button, Nav, Navbar, NavItem, NavLink } from 'reactstrap';
 
 const Navigation = ({ token, setToken, authed }) => {
     return (

@@ -1,22 +1,19 @@
-import './App.css';
-import { useMemo } from 'react';
 import jwt from 'jsonwebtoken';
-import env from 'react-dotenv';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import React, { useMemo } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import {
     BrowserRouter as Router,
-    Switch,
+    Redirect,
     Route,
-    Redirect
+    Switch
 } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-import Navigation from './Navigation';
-import Login from './Login';
-import Register from './Register';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import './App.css';
 import DashBoard from './DashBoard';
-import React from 'react';
+import Login from './Login';
+import Navigation from './Navigation';
+import PrivateRoute from './PrivateRoute';
+import Register from './Register';
 
 const queryClient = new QueryClient();
 
