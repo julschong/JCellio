@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-// import { columnsFromBackend } from '../_data';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { FETCH } from '../helper/url';
 import ColumnService from '../services/columnService';
