@@ -92,7 +92,7 @@ const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
                     />
                 ) : (
                     <button onClick={() => setAddingItem(true)} href="#">
-                        + Add another card
+                        + Add another task
                     </button>
                 )}
             </div>

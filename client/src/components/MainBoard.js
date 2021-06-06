@@ -9,15 +9,16 @@ import AddColumn from './AddColumn';
 import Column from './Column';
 
 const MainBoard = ({ data, selectedIndex }) => {
-    const [columns, setColumns] = useState({ data: [], pos: [] });
+    const [columns, setColumns] = useState([]);
+    const [position, setPosition] = useState([]);
+
     useEffect(() => {
         if (data && data.length > 0) {
-            setColumns({
-                data: data[selectedIndex].columns,
-                pos: data[selectedIndex].colPos
-            });
+            setColumns(data[selectedIndex].columns);
+            setPosition(data[selectedIndex].colPos);
         }
     }, [data, selectedIndex]);
+
     const [addingColumn, setAddingColumn] = useState(false);
     const scrollToEnd = useRef();
 
@@ -32,7 +33,7 @@ const MainBoard = ({ data, selectedIndex }) => {
             }
             setColumns((prev) => {
                 const srcCol = {
-                    ...prev.data.find(
+                    ...prev.find(
                         (column) => column.id === Number(source.droppableId)
                     )
                 };
@@ -44,7 +45,7 @@ const MainBoard = ({ data, selectedIndex }) => {
                 task.columnId = Number(destination.droppableId);
 
                 let destCol = {
-                    ...prev.data.find(
+                    ...prev.find(
                         (column) =>
                             column.id === Number(destination.droppableId)
                     )
@@ -64,7 +65,7 @@ const MainBoard = ({ data, selectedIndex }) => {
                 destCol.tasks.push(task);
                 destCol.taskPos.splice(destination.index, 0, task.id);
 
-                const newData = [...prev.data].map((column) => {
+                const newData = [...prev].map((column) => {
                     if (column.id === destCol.id) {
                         return destCol;
                     } else if (column.id === srcCol.id) {
@@ -73,13 +74,18 @@ const MainBoard = ({ data, selectedIndex }) => {
                     return column;
                 });
 
-                return { ...prev, data: newData };
+                return [...newData];
             });
             taskService.swapTaskPos(
                 Number(result.draggableId),
                 Number(destination.droppableId),
                 destination.index
             );
+        } else {
+            setColumns((prev) => {
+                console.log(prev);
+                return prev;
+            });
         }
     };
 
@@ -91,27 +97,23 @@ const MainBoard = ({ data, selectedIndex }) => {
         const savedColumn = await ColumnService.addColumn(newColumn);
 
         setColumns((prev) => {
-            const newData = [...prev.data, savedColumn.data];
-            const newPos = [...prev.pos, savedColumn.data.id];
-            return { pos: newPos, data: newData };
+            const newData = [...prev, savedColumn.data];
+            return [...newData];
         });
+        setPosition((prev) => [...prev, savedColumn.data.id]);
         setAddingColumn(false);
         scrollToEnd.current.scrollIntoView({ behavior: 'smooth' });
     };
     const changeColumnName = async (columnId, newName) => {
         setColumns((prev) => {
             const newColumn = {
-                ...prev.data.find((column) => column.id === columnId)
+                ...prev.find((column) => column.id === columnId)
             };
             newColumn.name = newName;
-            const newData = [
-                ...prev.data.filter((column) => column.id !== columnId),
+            return [
+                ...prev.filter((column) => column.id !== columnId),
                 newColumn
             ];
-            return {
-                ...prev,
-                data: newData
-            };
         });
         await ColumnService.changeColumnName(columnId, newName);
     };
@@ -126,14 +128,14 @@ const MainBoard = ({ data, selectedIndex }) => {
 
         setColumns((prev) => {
             const newData = [];
-            for (const d of prev.data) {
+            for (const d of prev) {
                 if (d.id === columnId) {
                     d.tasks.push(savedTask.data.data);
                     d.taskPos.push(savedTask.data.data.id);
                 }
                 newData.push(d);
             }
-            return { ...prev, data: newData };
+            return [...newData];
         });
     };
 
@@ -151,8 +153,8 @@ const MainBoard = ({ data, selectedIndex }) => {
                     }}
                 >
                     <DragDropContext onDragEnd={dragEnd}>
-                        {columns.pos.map((pos, index) => {
-                            const column = columns.data.find(
+                        {position.map((pos, index) => {
+                            const column = columns.find(
                                 (col) => col.id === pos
                             );
                             const columnId = column.id;

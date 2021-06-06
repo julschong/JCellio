@@ -24,6 +24,16 @@ const AddItem = ({ addTask, columnId, setAddingItem, addingItem, pos }) => {
                     name="card-content"
                     id="content"
                     placeholder="Enter a title for this card..."
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') {
+                            if (e.target.value.trim() === '') {
+                                return;
+                            }
+                            addTask(columnId, e.target.value.trim(), pos);
+                            e.target.value = '';
+                            setAddingItem(false);
+                        }
+                    }}
                     style={{
                         backgroundColor: 'white',
                         borderRadius: '5px'
@@ -34,7 +44,7 @@ const AddItem = ({ addTask, columnId, setAddingItem, addingItem, pos }) => {
             </FormGroup>
             <div className="d-flex">
                 <FormGroup className="flex-grow-1">
-                    <button type="submit">Add a card</button>
+                    <button type="submit">Add a task</button>
                 </FormGroup>
                 <FormGroup>
                     <button
