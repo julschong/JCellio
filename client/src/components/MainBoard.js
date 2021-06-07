@@ -9,9 +9,14 @@ import Column from './Column';
 import './MainBoard.css';
 
 const MainBoard = ({ data, selectedIndex }) => {
+    // columns keeps track on colmuns data
     const [columns, setColumns] = useState([]);
+    // position keeps track of columns position or index
     const [position, setPosition] = useState([]);
+    // addColumn controls if addColumn form is opened or closed
+    const [addingColumn, setAddingColumn] = useState(false);
 
+    // refreshes when data changes
     useEffect(() => {
         if (data && data.length > 0) {
             setColumns(data[selectedIndex].columns);
@@ -19,11 +24,15 @@ const MainBoard = ({ data, selectedIndex }) => {
         }
     }, [data, selectedIndex]);
 
-    const [addingColumn, setAddingColumn] = useState(false);
+    // ref to the div at the end, when new column is added, scroll to the end
     const scrollToEnd = useRef();
 
+    // function to exec when dragging ends
     const dragEnd = async (result) => {
+        //destructure to access source and destination
         const { source, destination } = result;
+
+        // if destination is valid, perforce logic and send Data to backend
         if (destination) {
             if (
                 source.droppableId === destination.droppableId &&
@@ -99,6 +108,7 @@ const MainBoard = ({ data, selectedIndex }) => {
         setAddingColumn(false);
         scrollToEnd.current.scrollIntoView({ behavior: 'smooth' });
     };
+
     const changeColumnName = async (columnId, newName) => {
         setColumns((prev) => {
             const newColumn = {
@@ -112,6 +122,7 @@ const MainBoard = ({ data, selectedIndex }) => {
         });
         await ColumnService.changeColumnName(columnId, newName);
     };
+
     const addTask = async (columnId, newTitle) => {
         const newTask = {
             name: newTitle,
@@ -132,6 +143,7 @@ const MainBoard = ({ data, selectedIndex }) => {
             return [...newData];
         });
     };
+
     const deleteTask = async (columnId, taskId) => {
         setColumns((prev) => {
             const newColumn = {
