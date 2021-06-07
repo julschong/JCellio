@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import ColumnOptions from './../ColumnOptions';
 import AddItem from './AddItem';
 import './Column.css';
 import Task from './Task';
@@ -41,18 +42,18 @@ const Column = ({
                         className="more-option"
                         src="./assets/more.png"
                         alt="more"
-                        onClick={() => setShowDropdown((prev) => !prev)}
+                        onClick={() => {
+                            setShowDropdown((prev) => !prev);
+                        }}
+                        draggable={false}
                     />
                 </div>
                 {showDropdown ? (
-                    <ul className="options">
-                        <p>actions</p>
-                        <li>
-                            <button onClick={(e) => deleteColumn(columnId)}>
-                                delete
-                            </button>
-                        </li>
-                    </ul>
+                    <ColumnOptions
+                        deleteColumn={deleteColumn}
+                        columnId={columnId}
+                        setShowDropdown={setShowDropdown}
+                    />
                 ) : null}
 
                 <Droppable

@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import BoardService from '../services/boardService';
+import './BoardSelect.css';
 
 const BoardSelect = ({ selection, setSelection, data, refetch }) => {
     const [token] = useLocalStorage('token');
+    const container = useRef();
+
+    const handleClick = useCallback(
+        (e) => {
+            if (
+                container.current &&
+                !container.current.contains(e.target) &&
+                !e.target.className.includes('board-options')
+            ) {
+                setSelection((prev) => ({ ...prev, visible: false }));
+            }
+        },
+        [setSelection]
+    );
+
+    useEffect(() => {
+        document.addEventListener('click', handleClick);
+        return () => {
+            document.removeEventListener('click', handleClick);
+        };
+    }, [handleClick]);
 
     const toggleVisible = selection.visible
         ? { transform: 'translateX(0px)', zIndex: 5 }
         : { zIndex: -1 };
+
     return (
         <>
             <img
-                className="position-absolute"
+                className="position-absolute board-options"
                 style={{
                     top: 5,
                     left: 5,
@@ -30,25 +53,49 @@ const BoardSelect = ({ selection, setSelection, data, refetch }) => {
                 src="../assets/menuX32.png"
                 alt="menu"
             ></img>
-            <div className="sidebar position-absolute" style={toggleVisible}>
+            <div
+                ref={container}
+                className="sidebar position-absolute"
+                style={toggleVisible}
+            >
                 <ul className="d-flex flex-column">
                     {data
                         ? data.map((board, i) => (
-                              <li key={`${board.name + board.id}`}>
-                                  <button
-                                      href="#"
-                                      onClick={() =>
-                                          setSelection((prev) => {
-                                              return {
-                                                  ...prev,
-                                                  selectedIndex: i
-                                              };
-                                          })
-                                      }
-                                  >
-                                      {board.name}
-                                  </button>
-                              </li>
+                              <div
+                                  key={`container-${board.name + board.id}`}
+                                  className="board-selection"
+                              >
+                                  <li key={`${board.name + board.id}`}>
+                                      <button
+                                          className="transparent-btn"
+                                          onClick={() =>
+                                              setSelection((prev) => {
+                                                  return {
+                                                      ...prev,
+                                                      selectedIndex: i
+                                                  };
+                                              })
+                                          }
+                                      >
+                                          {board.name}
+                                      </button>
+                                      <button
+                                          key={`delete-${
+                                              board.name + board.id
+                                          }`}
+                                          onClick={async () => {
+                                              await BoardService.deleteBoard(
+                                                  board.id,
+                                                  token
+                                              );
+                                              refetch();
+                                          }}
+                                          className="board-btn"
+                                      >
+                                          X
+                                      </button>
+                                  </li>
+                              </div>
                           ))
                         : null}
                 </ul>
@@ -69,8 +116,21 @@ const BoardSelect = ({ selection, setSelection, data, refetch }) => {
                         placeholder="new board title..."
                         rows="1"
                         spellCheck={false}
+                        onKeyDown={async (e) => {
+                            if (e.key === 'Enter') {
+                                if (e.target.value.trim().length > 0 && token)
+                                    await BoardService.addBoard(
+                                        e.target.value.trim(),
+                                        token
+                                    );
+                                e.target.value = '';
+                                refetch();
+                            }
+                        }}
                     />
-                    <button type="submit">Add a new board</button>
+                    <button className="transparent-btn" type="submit">
+                        Add a new board
+                    </button>
                 </form>
             </div>
         </>

@@ -1,0 +1,66 @@
+.board-selection {
+    display: flex;
+}
+
+.board-selection > li {
+    flex-grow: 1;
+    position: relative;
+}
+
+.board-selection > button {
+    padding: 0;
+}
+
+.board-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0;
+    border: none;
+    background-color: #ff00009a;
+    color: white;
+    height: calc(100% - 10px);
+    width: 10%;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    text-align: center;
+}
+.board-btn:hover {
+    opacity: 1;
+}
+
+.sidebar {
+    left: 0;
+    top: 0;
+    padding: 20px;
+    padding-top: 40px;
+    min-width: 250px;
+    background-color: darkgrey;
+    height: 100%;
+    transform: translateX(-250px);
+    transition: transform 0.1s ease-in-out;
+}
+
+.sidebar ul {
+    padding: 0;
+}
+
+.sidebar li {
+    text-decoration: none;
+    list-style: none;
+    border-bottom: 1px solid grey;
+    padding: 5px;
+    transition: 0.5s;
+}
+
+.sidebar > button {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.form {
+    background-color: aliceblue;
+    padding: 50px;
+    border-radius: 1em;
+}

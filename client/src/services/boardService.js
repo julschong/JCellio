@@ -12,8 +12,15 @@ const addBoard = async (newBoardTitle, token) => {
     return savedColumn.data;
 };
 
+const deleteBoard = async (boardId, token) => {
+    await axios.delete(`${FETCH.BASE_URL}/boards/${boardId}`, {
+        headers: { Authorization: token }
+    });
+};
+
 const BoardService = {
-    addBoard
+    addBoard,
+    deleteBoard
 };
 
 export default BoardService;

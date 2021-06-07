@@ -108,11 +108,11 @@ main {
 .add-column button,
 .main > button,
 .form-group > button,
-.sidebar button {
+.transparent-btn {
     text-decoration: none;
     color: grey;
     cursor: pointer;
-    padding: 0.5em;
+    padding: 0.25em;
     display: block;
     width: 100%;
     background-color: transparent;
@@ -122,7 +122,8 @@ main {
 .columns > button:hover,
 .add-column button:hover,
 .form-group > button:hover,
-.sidebar button:hover {
+.sidebar > button:hover,
+.transparent-btn:hover {
     background-color: hsl(0, 0%, 100%, 0.3);
 }
 
@@ -134,40 +135,4 @@ main {
 .form-group textarea:focus {
     outline: none;
     border: none;
-}
-
-.sidebar {
-    left: 0;
-    top: 0;
-    padding: 20px;
-    padding-top: 40px;
-    min-width: 250px;
-    background-color: darkgrey;
-    height: 100%;
-    transform: translateX(-250px);
-    transition: transform 0.1s ease-in-out;
-}
-
-.sidebar ul {
-    padding: 0;
-}
-
-.sidebar li {
-    text-decoration: none;
-    list-style: none;
-    border-bottom: 1px solid grey;
-    padding: 5px;
-    transition: 0.5s;
-}
-
-.sidebar button {
-    width: 100%;
-    background-color: transparent;
-    border: none;
-}
-
-.form {
-    background-color: aliceblue;
-    padding: 50px;
-    border-radius: 1em;
 }
