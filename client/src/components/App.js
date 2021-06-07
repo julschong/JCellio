@@ -15,21 +15,28 @@ import Navigation from './Navigation';
 import PrivateRoute from './PrivateRoute';
 import Register from './Register';
 
+// use React Query to fetch data from backend
 const queryClient = new QueryClient();
 
 const App = () => {
+    // fetch token from local storage
     const [token, setToken] = useLocalStorage('token', null);
 
+    // authed check if token is valid
     const authed = useMemo(() => {
         if (token) {
-            return jwt.verify(
-                token.replace(/^[Bb]earer[\w=]/, ''),
-                process.env.REACT_APP_SECRET
-            );
+            try {
+                return jwt.verify(
+                    token.replace(/^[Bb]earer[\w=]/, ''),
+                    process.env.REACT_APP_SECRET
+                );
+            } catch (error) {
+                console.error('token in valid');
+                setToken(null);
+            }
         }
-
         return token !== null;
-    }, [token]);
+    }, [token, setToken]);
 
     return (
         <QueryClientProvider client={queryClient}>

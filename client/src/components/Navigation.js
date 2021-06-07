@@ -1,4 +1,5 @@
 import { Button, Nav, Navbar, NavItem, NavLink } from 'reactstrap';
+import './Navigation.css';
 
 const Navigation = ({ token, setToken, authed }) => {
     return (
