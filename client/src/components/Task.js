@@ -1,6 +1,7 @@
 import { Draggable } from 'react-beautiful-dnd';
+import './Task.css';
 
-const Item = ({ task, index, taskId }) => {
+const Task = ({ task, index, taskId, columnId, deleteTask }) => {
     return (
         <Draggable draggableId={String(taskId)} index={index} key={taskId}>
             {(provided, snapshot) => {
@@ -11,27 +12,24 @@ const Item = ({ task, index, taskId }) => {
                     : null;
                 return (
                     <div
-                        className="item"
+                        className="task"
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         style={{
-                            userSelect: 'none',
-                            padding: 8,
-                            margin: '0 0 8px 0',
-                            minHeight: '25px',
                             backgroundColor: snapshot.isDragging
                                 ? '#263B4A'
                                 : '#FFF',
-                            color: '#777',
-                            borderRadius: '5px',
                             ...provided.draggableProps.style
                         }}
                     >
-                        <span className="text-break">
-                            {formattedTaskName}
-                            {'      ID  ' + taskId}
-                        </span>
+                        <span className="text-break">{formattedTaskName}</span>
+                        <button
+                            className="delete-btn"
+                            onClick={(e) => deleteTask(columnId, taskId)}
+                        >
+                            x
+                        </button>
                     </div>
                 );
             }}
@@ -39,4 +37,4 @@ const Item = ({ task, index, taskId }) => {
     );
 };
 
-export default Item;
+export default Task;

@@ -33,6 +33,16 @@ const AddColumn = ({ addColumn, addingColumn, setAddingColumn }) => {
                             }}
                             spellCheck={false}
                             autoFocus
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    setAddingColumn(false);
+                                    if (e.target.value.trim() === '') {
+                                        return;
+                                    }
+                                    addColumn(e.target.value.trim());
+                                    e.target.value = '';
+                                }
+                            }}
                         />
                     </FormGroup>
                     <div className="d-flex">

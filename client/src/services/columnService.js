@@ -17,9 +17,17 @@ const changeColumnName = async (columnId, newTitle) => {
     return savedColumn.data;
 };
 
+const deleteColumn = async (columnId) => {
+    const deletedColumn = await axios.delete(
+        `${FETCH.BASE_URL}/columns/${columnId}`
+    );
+    return deletedColumn.date;
+};
+
 const ColumnService = {
     addColumn,
-    changeColumnName
+    changeColumnName,
+    deleteColumn
 };
 
 export default ColumnService;

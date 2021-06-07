@@ -1,45 +1,60 @@
 import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import AddItem from './AddItem';
-import Item from './Item';
+import './Column.css';
+import Task from './Task';
 
-const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
+const Column = ({
+    columnId,
+    column,
+    addTask,
+    deleteTask,
+    deleteColumn,
+    changeColumnName,
+    pos
+}) => {
     const [addingItem, setAddingItem] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-            }}
-        >
-            <div
-                className="p-3 columns"
-                style={{
-                    margin: 8,
-                    backgroundColor: 'lightgrey',
-                    borderRadius: '5px',
-                    position: 'relative'
-                }}
-            >
-                <textarea
-                    onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
+        <div className="column">
+            <div className="p-3 columns column-card">
+                <div className="column-edit">
+                    <textarea
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.target.blur();
+                            }
+                        }}
+                        onBlur={(e) => {
                             e.target.value = e.target.value.trim();
-                            e.target.blur();
-                        }
-                    }}
-                    onBlur={(e) => {
-                        if (column.name !== e.target.value) {
-                            changeColumnName(columnId, e.target.value);
-                        }
-                    }}
-                    spellCheck={false}
-                    className="font-size-1.2em"
-                    maxLength="50"
-                    defaultValue={column.title}
-                />
+                            if (column.name !== e.target.value) {
+                                changeColumnName(columnId, e.target.value);
+                            }
+                        }}
+                        spellCheck={false}
+                        className="font-size-1.2em"
+                        maxLength="50"
+                        defaultValue={column.title}
+                    />
+                    <img
+                        className="more-option"
+                        src="./assets/more.png"
+                        alt="more"
+                        onClick={() => setShowDropdown((prev) => !prev)}
+                    />
+                </div>
+                {showDropdown ? (
+                    <ul className="options">
+                        <p>actions</p>
+                        <li>
+                            <button onClick={(e) => deleteColumn(columnId)}>
+                                delete
+                            </button>
+                        </li>
+                    </ul>
+                ) : null}
+
                 <Droppable
                     droppableId={String(columnId)}
                     key={columnId + column.title}
@@ -62,18 +77,16 @@ const Column = ({ columnId, column, addTask, changeColumnName, pos }) => {
                                     let task = column.tasks.find(
                                         (task) => task.id === pos
                                     );
-                                    if (!task) {
-                                        console.log('POS ' + pos);
-                                        console.log('INDEX ' + index);
-                                    }
                                     const taskId = task ? task.id : null;
 
                                     return (
-                                        <Item
+                                        <Task
                                             task={task}
                                             taskId={taskId}
                                             index={index}
                                             key={taskId}
+                                            columnId={columnId}
+                                            deleteTask={deleteTask}
                                         />
                                     );
                                 })}

@@ -6,6 +6,7 @@ import ColumnService from '../services/columnService';
 import taskService from '../services/taskService';
 import AddColumn from './AddColumn';
 import Column from './Column';
+import './MainBoard.css';
 
 const MainBoard = ({ data, selectedIndex }) => {
     const [columns, setColumns] = useState([]);
@@ -80,11 +81,6 @@ const MainBoard = ({ data, selectedIndex }) => {
                 Number(destination.droppableId),
                 destination.index
             );
-        } else {
-            setColumns((prev) => {
-                console.log(prev);
-                return prev;
-            });
         }
     };
 
@@ -116,7 +112,6 @@ const MainBoard = ({ data, selectedIndex }) => {
         });
         await ColumnService.changeColumnName(columnId, newName);
     };
-
     const addTask = async (columnId, newTitle) => {
         const newTask = {
             name: newTitle,
@@ -137,20 +132,35 @@ const MainBoard = ({ data, selectedIndex }) => {
             return [...newData];
         });
     };
+    const deleteTask = async (columnId, taskId) => {
+        setColumns((prev) => {
+            const newColumn = {
+                ...prev.find((column) => column.id === columnId)
+            };
+            newColumn.tasks = newColumn.tasks.filter(
+                (task) => task.id !== taskId
+            );
+            newColumn.taskPos = newColumn.taskPos.filter(
+                (taskIdInData) => taskIdInData !== taskId
+            );
+            return [
+                ...prev.filter((column) => column.id !== columnId),
+                newColumn
+            ];
+        });
+        await taskService.deleteTaskById(taskId);
+    };
+
+    const deleteColumn = async (columnId) => {
+        setColumns((prev) => prev.filter((column) => column.id !== columnId));
+        setPosition((prev) => prev.filter((pos) => pos !== columnId));
+        await ColumnService.deleteColumn(columnId);
+    };
 
     return (
         <>
             {columns && data && data.length > 0 ? (
-                <div
-                    className="main"
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'start',
-                        height: '100%',
-                        overflow: 'auto',
-                        minWidth: '80vw'
-                    }}
-                >
+                <div className="main">
                     <DragDropContext onDragEnd={dragEnd}>
                         {position.map((pos, index) => {
                             const column = columns.find(
@@ -164,6 +174,8 @@ const MainBoard = ({ data, selectedIndex }) => {
                                     column={column}
                                     columnId={columnId}
                                     addTask={addTask}
+                                    deleteTask={deleteTask}
+                                    deleteColumn={deleteColumn}
                                     changeColumnName={changeColumnName}
                                 />
                             );
