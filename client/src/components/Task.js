@@ -1,51 +1,51 @@
-import { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import './Task.css';
-import TaskModal from './TaskModal';
 
-const Task = ({ task, index, taskId, columnId, deleteTask }) => {
-    const [showModal, setShowModal] = useState(false);
-
+const Task = ({
+    task,
+    index,
+    taskId,
+    columnId,
+    deleteTask,
+    setChangeTaskModel
+}) => {
     return (
-        <>
-            <Draggable draggableId={String(taskId)} index={index} key={taskId}>
-                {(provided, snapshot) => {
-                    const formattedTaskName = task
-                        ? task.name.length < 30
-                            ? task.name
-                            : task.name.substring(0, 20) + '...'
-                        : null;
-                    return (
-                        <div
-                            className="task"
-                            onClick={() => setShowModal(true)}
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={{
-                                backgroundColor: snapshot.isDragging
-                                    ? '#263B4A'
-                                    : '#FFF',
-                                ...provided.draggableProps.style
-                            }}
+        <Draggable draggableId={String(taskId)} index={index} key={taskId}>
+            {(provided, snapshot) => {
+                const formattedTaskName = task
+                    ? task.name.length < 30
+                        ? task.name
+                        : task.name.substring(0, 20) + '...'
+                    : null;
+                return (
+                    <div
+                        className="task"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                            backgroundColor: snapshot.isDragging
+                                ? '#263B4A'
+                                : '#FFF',
+                            ...provided.draggableProps.style
+                        }}
+                    >
+                        <p
+                            className="text-break p-0 m-0"
+                            onClick={() => setChangeTaskModel(taskId)}
                         >
-                            <span className="text-break">
-                                {formattedTaskName}
-                            </span>
-                            <button
-                                className="delete-btn"
-                                onClick={(e) => deleteTask(columnId, taskId)}
-                            >
-                                x
-                            </button>
-                        </div>
-                    );
-                }}
-            </Draggable>
-            {showModal ? (
-                <TaskModal showModal={showModal} setShowModal={setShowModal} />
-            ) : null}
-        </>
+                            {formattedTaskName}
+                        </p>
+                        <button
+                            className="delete-btn"
+                            onClick={(e) => deleteTask(columnId, taskId)}
+                        >
+                            x
+                        </button>
+                    </div>
+                );
+            }}
+        </Draggable>
     );
 };
 

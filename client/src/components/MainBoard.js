@@ -7,6 +7,7 @@ import taskService from '../services/taskService';
 import AddColumn from './AddColumn';
 import Column from './Column';
 import './MainBoard.css';
+import TaskModal from './TaskModal';
 
 const MainBoard = ({ data, selectedIndex }) => {
     // columns keeps track on colmuns data
@@ -15,6 +16,10 @@ const MainBoard = ({ data, selectedIndex }) => {
     const [position, setPosition] = useState([]);
     // addColumn controls if addColumn form is opened or closed
     const [addingColumn, setAddingColumn] = useState(false);
+
+    const [changeTaskModal, setChangeTaskModel] = useState(null);
+
+    const [dropDisabled, setDropDisabled] = useState(false);
 
     // refreshes when data changes
     useEffect(() => {
@@ -34,11 +39,12 @@ const MainBoard = ({ data, selectedIndex }) => {
 
         // if destination is valid, perforce logic and send Data to backend
         if (destination) {
+            setDropDisabled(true);
             if (
                 source.droppableId === destination.droppableId &&
                 source.index === destination.index
             ) {
-                return;
+                return setDropDisabled(false);
             }
             setColumns((prev) => {
                 const srcCol = {
@@ -85,14 +91,17 @@ const MainBoard = ({ data, selectedIndex }) => {
 
                 return [...newData];
             });
-            taskService.swapTaskPos(
+
+            await taskService.swapTaskPos(
                 Number(result.draggableId),
                 Number(destination.droppableId),
                 destination.index
             );
+            setDropDisabled(false);
         }
     };
 
+    // TODO: fix race condition...
     const addColumn = async (name) => {
         const newColumn = {
             title: `${name}`,
@@ -189,16 +198,20 @@ const MainBoard = ({ data, selectedIndex }) => {
                                     deleteTask={deleteTask}
                                     deleteColumn={deleteColumn}
                                     changeColumnName={changeColumnName}
+                                    setChangeTaskModel={setChangeTaskModel}
+                                    dropDisabled={dropDisabled}
                                 />
                             );
                         })}
                     </DragDropContext>
-
                     <AddColumn
                         addColumn={addColumn}
                         addingColumn={addingColumn}
                         setAddingColumn={setAddingColumn}
                     />
+                    {changeTaskModal ? (
+                        <TaskModal setChangeTaskModel={setChangeTaskModel} />
+                    ) : null}
                     <div ref={scrollToEnd} />
                 </div>
             ) : null}

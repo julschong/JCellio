@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef } from 'react';
 import './TaskModal.css';
 
-const TaskModal = ({ showModal, setShowModal }) => {
+const TaskModal = ({ setChangeTaskModel }) => {
     const handleClick = useCallback(
         (e) => {
             if (e.target.className === 'modal-background') {
-                setShowModal(false);
+                setChangeTaskModel(null);
             }
         },
-        [setShowModal]
+        [setChangeTaskModel]
     );
 
     const container = useRef();

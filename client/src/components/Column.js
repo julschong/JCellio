@@ -12,7 +12,9 @@ const Column = ({
     deleteTask,
     deleteColumn,
     changeColumnName,
-    pos
+    setChangeTaskModel,
+    pos,
+    dropDisabled
 }) => {
     const [addingItem, setAddingItem] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -59,6 +61,7 @@ const Column = ({
                 <Droppable
                     droppableId={String(columnId)}
                     key={columnId + column.title}
+                    isDropDisabled={dropDisabled}
                 >
                     {(provided, snapshot) => {
                         return (
@@ -88,6 +91,9 @@ const Column = ({
                                             key={taskId}
                                             columnId={columnId}
                                             deleteTask={deleteTask}
+                                            setChangeTaskModel={
+                                                setChangeTaskModel
+                                            }
                                         />
                                     );
                                 })}
