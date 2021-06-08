@@ -31,7 +31,7 @@ const App = () => {
                     process.env.REACT_APP_SECRET
                 );
             } catch (error) {
-                console.error('token in valid');
+                console.error('token invalid', error);
                 setToken(null);
             }
         }

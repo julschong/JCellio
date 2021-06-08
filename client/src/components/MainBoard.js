@@ -154,6 +154,7 @@ const MainBoard = ({ data, selectedIndex }) => {
     };
 
     const deleteTask = async (columnId, taskId) => {
+        await taskService.deleteTaskById(taskId);
         setColumns((prev) => {
             const newColumn = {
                 ...prev.find((column) => column.id === columnId)
@@ -164,12 +165,12 @@ const MainBoard = ({ data, selectedIndex }) => {
             newColumn.taskPos = newColumn.taskPos.filter(
                 (taskIdInData) => taskIdInData !== taskId
             );
+            console.log(newColumn);
             return [
                 ...prev.filter((column) => column.id !== columnId),
                 newColumn
             ];
         });
-        await taskService.deleteTaskById(taskId);
     };
 
     const deleteColumn = async (columnId) => {
