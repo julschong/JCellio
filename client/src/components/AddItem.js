@@ -26,11 +26,12 @@ const AddItem = ({ columnId, pos, setAddingItem }) => {
                     name="card-content"
                     id="content"
                     placeholder="Enter a title for this card..."
-                    onKeyUp={(e) => {
+                    onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             if (e.target.value.trim() === '') {
                                 return;
                             }
+                            e.target.value = e.target.value.trim();
                             addTask(columnId, e.target.value.trim(), pos);
                             e.target.value = '';
                             setAddingItem(false);

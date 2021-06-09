@@ -7,6 +7,7 @@ const BoardSelect = ({
     showSideBar,
     setShowSideBar,
     setSelection,
+    selection,
     data,
     refetch
 }) => {
@@ -83,6 +84,11 @@ const BoardSelect = ({
                                                       (prev) => board.id
                                                   )
                                               }
+                                              style={
+                                                  board.id === selection
+                                                      ? { color: 'black' }
+                                                      : null
+                                              }
                                           >
                                               {board.name}
                                           </button>
@@ -125,9 +131,10 @@ const BoardSelect = ({
                         spellCheck={false}
                         onKeyDown={async (e) => {
                             if (e.key === 'Enter') {
+                                e.target.blur();
                                 if (e.target.value.trim().length > 0 && token)
                                     await BoardService.addBoard(
-                                        e.target.value.trim(),
+                                        e.target.value,
                                         token
                                     );
                                 e.target.value = '';

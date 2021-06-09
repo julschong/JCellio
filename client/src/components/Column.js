@@ -42,7 +42,12 @@ const Column = ({ columnId, column, pos }) => {
                         draggable={false}
                     />
                 </div>
-                {showDropdown ? <ColumnOptions columnId={columnId} /> : null}
+                {showDropdown ? (
+                    <ColumnOptions
+                        columnId={columnId}
+                        setShowDropdown={setShowDropdown}
+                    />
+                ) : null}
 
                 <Droppable
                     droppableId={String(columnId)}
