@@ -1,15 +1,18 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
+import { StoreContext } from './helper/Store';
 
-const ColumnOptions = ({ deleteColumn, columnId, setShowDropdown }) => {
+const ColumnOptions = ({ columnId }) => {
     const container = useRef();
+
+    const { setShowDropDown, deleteColumn } = useContext(StoreContext);
 
     const handleClick = useCallback(
         (e) => {
             if (container.current && !container.current.contains(e.target)) {
-                setShowDropdown(false);
+                setShowDropDown(false);
             }
         },
-        [setShowDropdown]
+        [setShowDropDown]
     );
 
     useEffect(() => {

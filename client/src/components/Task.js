@@ -1,14 +1,10 @@
+import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { StoreContext } from '../helper/Store';
 import './Task.css';
 
-const Task = ({
-    task,
-    index,
-    taskId,
-    columnId,
-    deleteTask,
-    setChangeTaskModel
-}) => {
+const Task = ({ task, index, taskId, columnId }) => {
+    const { deleteTask, setChangeTaskModel } = useContext(StoreContext);
     return (
         <Draggable draggableId={String(taskId)} index={index} key={taskId}>
             {(provided, snapshot) => {

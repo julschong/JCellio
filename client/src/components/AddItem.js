@@ -1,8 +1,10 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
+import { StoreContext } from '../helper/Store';
 
-const AddItem = ({ addTask, columnId, setAddingItem, addingItem, pos }) => {
+const AddItem = ({ columnId, pos, setAddingItem }) => {
     const text = useRef();
+    const { addTask } = useContext(StoreContext);
 
     return (
         <Form

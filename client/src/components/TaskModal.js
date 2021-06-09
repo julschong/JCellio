@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
+import { StoreContext } from '../helper/Store';
 import './TaskModal.css';
 
-const TaskModal = ({ setChangeTaskModel }) => {
+const TaskModal = () => {
+    const { setChangeTaskModel } = useContext(StoreContext);
     const handleClick = useCallback(
         (e) => {
             if (e.target.className === 'modal-background') {

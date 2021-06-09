@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { Container } from 'reactstrap';
+import Store from '../helper/Store';
 import { FETCH } from '../helper/url';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import BoardSelect from './BoardSelect';
 import MainBoard from './MainBoard';
-import { useQuery } from 'react-query';
-import { useEffect } from 'react';
 
 const DashBoard = () => {
     const [token] = useLocalStorage('token');
@@ -46,11 +46,13 @@ const DashBoard = () => {
                         data={data}
                         refetch={refetch}
                     />
-                    <MainBoard
-                        selectedIndex={selection.selectedIndex}
-                        data={data}
-                        loading={isLoading}
-                    />
+                    <Store>
+                        <MainBoard
+                            selectedIndex={selection.selectedIndex}
+                            data={data}
+                            loading={isLoading}
+                        />
+                    </Store>
                 </Container>
             )}
         </Container>

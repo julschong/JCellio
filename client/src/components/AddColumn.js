@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
+import { StoreContext } from '../helper/Store';
 
-const AddColumn = ({ addColumn, addingColumn, setAddingColumn }) => {
+const AddColumn = ({ addColumn }) => {
+    const { addingColumn, setAddingColumn } = useContext(StoreContext);
     return (
         <div className="add-column p-2">
             {addingColumn ? (

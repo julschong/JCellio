@@ -1,23 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import { StoreContext } from '../helper/Store';
 import ColumnOptions from './../ColumnOptions';
 import AddItem from './AddItem';
 import './Column.css';
 import Task from './Task';
 
-const Column = ({
-    columnId,
-    column,
-    addTask,
-    deleteTask,
-    deleteColumn,
-    changeColumnName,
-    setChangeTaskModel,
-    pos,
-    dropDisabled
-}) => {
+const Column = ({ columnId, column, pos }) => {
     const [addingItem, setAddingItem] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const { changeColumnName, dropDisabled } = useContext(StoreContext);
 
     return (
         <div className="column">
@@ -50,13 +42,7 @@ const Column = ({
                         draggable={false}
                     />
                 </div>
-                {showDropdown ? (
-                    <ColumnOptions
-                        deleteColumn={deleteColumn}
-                        columnId={columnId}
-                        setShowDropdown={setShowDropdown}
-                    />
-                ) : null}
+                {showDropdown ? <ColumnOptions columnId={columnId} /> : null}
 
                 <Droppable
                     droppableId={String(columnId)}
@@ -90,10 +76,6 @@ const Column = ({
                                             index={index}
                                             key={taskId}
                                             columnId={columnId}
-                                            deleteTask={deleteTask}
-                                            setChangeTaskModel={
-                                                setChangeTaskModel
-                                            }
                                         />
                                     );
                                 })}
@@ -105,10 +87,8 @@ const Column = ({
                 {addingItem ? (
                     <AddItem
                         pos={pos}
-                        addTask={addTask}
                         columnId={columnId}
                         setAddingItem={setAddingItem}
-                        addingItem={addingItem}
                     />
                 ) : (
                     <button onClick={() => setAddingItem(true)} href="#">
