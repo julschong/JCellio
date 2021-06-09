@@ -13,3 +13,15 @@
     font-size: 1.5em;
     color: aliceblue;
 }
+
+.profile-icon {
+    font-size: 1.5em;
+    line-height: 2em;
+    color: aliceblue;
+    background-color: blueviolet;
+    height: 2em;
+    width: 2em;
+    text-align: center;
+    margin-inline: 20px;
+    border-radius: 50%;
+}

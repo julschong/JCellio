@@ -9,10 +9,9 @@ import MainBoard from './MainBoard';
 
 const DashBoard = () => {
     const [token] = useLocalStorage('token');
-    const [selection, setSelection] = useState({
-        selectedIndex: 0,
-        visible: false
-    });
+    const [selection, setSelection] = useState(null);
+    const [showSideBar, setShowSideBar] = useState(true);
+
     const { data, isLoading, refetch } = useQuery(
         'boards',
         () =>
@@ -24,9 +23,20 @@ const DashBoard = () => {
         { enabled: false }
     );
 
+    const [board, setBoard] = useState(null);
+
     useEffect(() => {
         refetch();
     }, [selection, refetch]);
+
+    useEffect(() => {
+        if (data && data.length > 0 && !selection) {
+            setBoard(data[0]);
+            setSelection(data[0].id);
+        } else if (data) {
+            setBoard(data.find((board) => board.id === selection));
+        }
+    }, [data, selection]);
 
     return (
         <Container
@@ -45,11 +55,14 @@ const DashBoard = () => {
                         setSelection={setSelection}
                         data={data}
                         refetch={refetch}
+                        showSideBar={showSideBar}
+                        setShowSideBar={setShowSideBar}
                     />
                     <Store>
                         <MainBoard
-                            selectedIndex={selection.selectedIndex}
+                            selectedIndex={selection}
                             data={data}
+                            board={board}
                             loading={isLoading}
                         />
                     </Store>

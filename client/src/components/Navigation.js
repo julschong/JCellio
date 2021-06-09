@@ -24,6 +24,11 @@ const Navigation = ({ token, setToken, authed }) => {
                     </NavItem>
                 ) : null}
             </Nav>
+            {authed ? (
+                <div className="profile-icon">
+                    <p>{authed.name.slice(0, 1)}</p>
+                </div>
+            ) : null}
             {token ? (
                 <Button onClick={() => setToken(null)}>Logout</Button>
             ) : null}

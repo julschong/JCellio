@@ -3,7 +3,13 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import BoardService from '../services/boardService';
 import './BoardSelect.css';
 
-const BoardSelect = ({ selection, setSelection, data, refetch }) => {
+const BoardSelect = ({
+    showSideBar,
+    setShowSideBar,
+    setSelection,
+    data,
+    refetch
+}) => {
     const [token] = useLocalStorage('token');
     const container = useRef();
 
@@ -14,10 +20,10 @@ const BoardSelect = ({ selection, setSelection, data, refetch }) => {
                 !container.current.contains(e.target) &&
                 !e.target.className.includes('board-options')
             ) {
-                setSelection((prev) => ({ ...prev, visible: false }));
+                setShowSideBar(false);
             }
         },
-        [setSelection]
+        [setShowSideBar]
     );
 
     useEffect(() => {
@@ -27,7 +33,7 @@ const BoardSelect = ({ selection, setSelection, data, refetch }) => {
         };
     }, [handleClick]);
 
-    const toggleVisible = selection.visible
+    const toggleVisible = showSideBar
         ? { transform: 'translateX(0px)', zIndex: 5 }
         : { zIndex: -1 };
 
@@ -46,9 +52,7 @@ const BoardSelect = ({ selection, setSelection, data, refetch }) => {
                     borderRadius: '5%'
                 }}
                 onClick={() => {
-                    setSelection((prev) => {
-                        return { ...prev, visible: !prev.visible };
-                    });
+                    setShowSideBar((prev) => !prev);
                 }}
                 src="../assets/menuX32.png"
                 alt="menu"
@@ -60,43 +64,46 @@ const BoardSelect = ({ selection, setSelection, data, refetch }) => {
             >
                 <ul className="d-flex flex-column">
                     {data
-                        ? data.map((board, i) => (
-                              <div
-                                  key={`container-${board.name + board.id}`}
-                                  className="board-selection"
-                              >
-                                  <li key={`${board.name + board.id}`}>
-                                      <button
-                                          className="transparent-btn"
-                                          onClick={() =>
-                                              setSelection((prev) => {
-                                                  return {
-                                                      ...prev,
-                                                      selectedIndex: i
-                                                  };
-                                              })
-                                          }
-                                      >
-                                          {board.name}
-                                      </button>
-                                      <button
-                                          key={`delete-${
-                                              board.name + board.id
-                                          }`}
-                                          onClick={async () => {
-                                              await BoardService.deleteBoard(
-                                                  board.id,
-                                                  token
-                                              );
-                                              refetch();
-                                          }}
-                                          className="board-btn"
-                                      >
-                                          X
-                                      </button>
-                                  </li>
-                              </div>
-                          ))
+                        ? data
+                              .sort(
+                                  (a, b) =>
+                                      Date.parse(a.createdAt) -
+                                      Date.parse(b.createdAt)
+                              )
+                              .map((board) => (
+                                  <div
+                                      key={`container-${board.name + board.id}`}
+                                      className="board-selection"
+                                  >
+                                      <li key={`${board.name + board.id}`}>
+                                          <button
+                                              className="transparent-btn"
+                                              onClick={() =>
+                                                  setSelection(
+                                                      (prev) => board.id
+                                                  )
+                                              }
+                                          >
+                                              {board.name}
+                                          </button>
+                                          <button
+                                              key={`delete-${
+                                                  board.name + board.id
+                                              }`}
+                                              onClick={async () => {
+                                                  await BoardService.deleteBoard(
+                                                      board.id,
+                                                      token
+                                                  );
+                                                  refetch();
+                                              }}
+                                              className="board-btn"
+                                          >
+                                              X
+                                          </button>
+                                      </li>
+                                  </div>
+                              ))
                         : null}
                 </ul>
                 <form

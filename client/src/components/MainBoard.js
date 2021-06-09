@@ -7,7 +7,7 @@ import Column from './Column';
 import './MainBoard.css';
 import TaskModal from './TaskModal';
 
-const MainBoard = ({ data, selectedIndex }) => {
+const MainBoard = ({ selectedIndex, board }) => {
     // columns keeps track on colmuns data
     const { columns, setColumns } = useContext(StoreContext);
 
@@ -23,11 +23,11 @@ const MainBoard = ({ data, selectedIndex }) => {
 
     // refreshes when data changes
     useEffect(() => {
-        if (data && data.length > 0) {
-            setColumns(data[selectedIndex].columns);
-            setPosition(data[selectedIndex].colPos);
+        if (board) {
+            setColumns(board.columns);
+            setPosition(board.colPos);
         }
-    }, [data, selectedIndex, setColumns, setPosition]);
+    }, [board, selectedIndex, setColumns, setPosition]);
 
     // ref to the div at the end, when new column is added, scroll to the end
     const scrollToEnd = useRef();
@@ -35,7 +35,7 @@ const MainBoard = ({ data, selectedIndex }) => {
     const addColumn = async (name) => {
         const newColumn = {
             title: `${name}`,
-            boardId: data[selectedIndex].id
+            boardId: board.id
         };
         const savedColumn = await ColumnService.addColumn(newColumn);
 
@@ -50,7 +50,7 @@ const MainBoard = ({ data, selectedIndex }) => {
 
     return (
         <>
-            {columns && data && data.length > 0 ? (
+            {columns && board ? (
                 <div className="main">
                     <DragDropContext onDragEnd={dragEnd}>
                         {position.map((pos, index) => {
