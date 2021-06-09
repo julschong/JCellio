@@ -1,5 +1,6 @@
 .navbar {
     height: 80px;
+    align-items: flex-start;
 }
 
 .navbar > h1 {
@@ -15,13 +16,18 @@
 }
 
 .profile-icon {
-    font-size: 1.5em;
+    font-size: 2em;
     line-height: 2em;
     color: aliceblue;
-    background-color: blueviolet;
     height: 2em;
     width: 2em;
+    background-color: blueviolet;
     text-align: center;
-    margin-inline: 20px;
     border-radius: 50%;
+    cursor: pointer;
+}
+
+.navbar-nav {
+    height: 100%;
+    align-items: flex-end;
 }

@@ -1,0 +1,18 @@
+.profile-dropdown {
+    background-color: aliceblue;
+    padding: 2em;
+    min-width: 15em;
+    top: 5em;
+    left: -10em;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    transition: all 0.5s;
+    text-align: center;
+}
+
+.profile-group {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
