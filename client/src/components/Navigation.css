@@ -1,10 +1,15 @@
 .navbar {
     height: 80px;
+    width: 100vw;
     align-items: center;
     flex-wrap: nowrap;
     background-color: rgba(0, 0, 0, 0.3);
     justify-content: flex-start;
-    padding-inline: 30px;
+}
+
+.navbar-nav {
+    flex-direction: row;
+    gap: 30px;
 }
 
 .navbar > h1 {
@@ -55,5 +60,9 @@
     .options {
         left: 70%;
         width: 30%;
+    }
+
+    main .form {
+        min-width: 100vw;
     }
 }
