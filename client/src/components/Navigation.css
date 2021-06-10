@@ -1,10 +1,11 @@
 .navbar {
     height: 80px;
-    width: 100vw;
+    min-width: 100%;
     align-items: center;
     flex-wrap: nowrap;
     background-color: rgba(0, 0, 0, 0.3);
     justify-content: flex-start;
+    padding-left: 30px;
 }
 
 .navbar-nav {
@@ -53,6 +54,7 @@
     }
     .navbar-nav {
         flex-grow: 10;
+        font-size: 4vw;
     }
     .main {
         flex-wrap: wrap;
@@ -63,6 +65,8 @@
     }
 
     main .form {
-        min-width: 100vw;
+        min-width: 100%;
+        padding: 5%;
+        border-radius: 0%;
     }
 }
