@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
 
+html {
+    overflow: hidden;
+}
+
 .flex-gap-1 {
     gap: 1%;
 }
@@ -16,6 +20,12 @@
     user-select: none;
     margin: 0;
     padding: 0;
+}
+
+#root {
+    min-height: 98vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Works on Firefox */
@@ -56,7 +66,7 @@ body {
 }
 
 main {
-    height: calc(100vh - 80px);
+    flex-grow: 1;
 }
 
 .bg-white-transparent {
