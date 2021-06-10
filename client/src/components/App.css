@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
 
 html {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .flex-gap-1 {
@@ -56,9 +56,11 @@ html {
 }
 
 body {
+    width: 100%;
     background-color: var(--primary-color-light);
     background-size: cover;
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
 }
 
 [class='font-size-1.2em'] {
@@ -129,4 +131,9 @@ main {
 .form-group textarea:focus {
     outline: none;
     border: none;
+}
+
+.form-control {
+    user-select: auto;
+    -webkit-user-select: auto;
 }
