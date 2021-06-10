@@ -6,18 +6,9 @@ import ProfileDropdrown from './ProfileDropdrown';
 const Navigation = ({ token, setToken, authed }) => {
     const [showProfile, setShowProfile] = useState(false);
     return (
-        <Navbar
-            style={{
-                backgroundColor: 'rgba(0,0,0,0.3)',
-                paddingInline: '30px'
-            }}
-        >
+        <Navbar>
             <h1>JCellio</h1>
-            <Nav
-                className="mr-auto d-flex flex-nowrap flex-row flex-grow-1 flex-gap-1"
-                style={{ color: 'white' }}
-                navbar
-            >
+            <Nav className="mr-auto d-flex" style={{ color: 'white' }} navbar>
                 <NavItem>
                     <NavLink href="/dashboard">Dashboard</NavLink>
                 </NavItem>

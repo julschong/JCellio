@@ -1,13 +1,17 @@
 .navbar {
     height: 80px;
-    align-items: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    background-color: rgba(0, 0, 0, 0.3);
+    justify-content: flex-start;
+    padding-inline: 30px;
 }
 
 .navbar > h1 {
     font-size: 3.5em;
     color: aliceblue;
     font-family: 'Bree Serif', serif;
-    padding-right: 2em;
+    margin-right: 1.5em;
 }
 
 .nav-item > a {
@@ -27,7 +31,29 @@
     cursor: pointer;
 }
 
-.navbar-nav {
-    height: 100%;
-    align-items: flex-end;
+.nav-link {
+    margin: 0 auto;
+}
+
+@media (max-width: 520px) {
+    .navbar > h1 {
+        color: aliceblue;
+        font-family: 'Bree Serif', serif;
+        margin-right: 0em;
+        font-size: 2em;
+    }
+    .navbar {
+        padding: 1em;
+        gap: 10px;
+    }
+    .navbar-nav {
+        flex-grow: 10;
+    }
+    .main {
+        flex-wrap: wrap;
+    }
+    .options {
+        left: 70%;
+        width: 30%;
+    }
 }
