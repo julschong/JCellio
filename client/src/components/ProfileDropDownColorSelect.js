@@ -3,13 +3,8 @@ import { ThemeContext } from '../helper/ThemeStore';
 import './ProfileDropDownColorSelect.css';
 
 const ProfileDropDownColorSelect = () => {
-    const {
-        storedColor,
-        setStoredColor,
-        currentColor,
-        setCurrentColor,
-        themes
-    } = useContext(ThemeContext);
+    const { setStoredColor, setCurrentColor, themes } =
+        useContext(ThemeContext);
 
     const chooseColor = (theme) => {
         setCurrentColor(theme);
