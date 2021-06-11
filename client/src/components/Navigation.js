@@ -22,9 +22,11 @@ const Navigation = ({ token, setToken, authed, fontColor }) => {
                 <div className="profile-group position-relative">
                     <div
                         className="profile-icon"
-                        onClick={() => setShowProfile((prev) => !prev)}
+                        onClick={() => {
+                            setShowProfile((prev) => !prev);
+                        }}
                     >
-                        <p>{authed.name.slice(0, 1)}</p>
+                        <p className="icon">{authed.name.slice(0, 1)}</p>
                     </div>
                     <ProfileDropdown
                         authed={authed}

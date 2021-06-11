@@ -10,7 +10,7 @@ import MainBoard from './MainBoard';
 const DashBoard = () => {
     const [token] = useLocalStorage('token');
     const [selection, setSelection] = useState(null);
-    const [showSideBar, setShowSideBar] = useState(true);
+    const [showSideBar, setShowSideBar] = useState(false);
 
     const { data, isLoading, refetch } = useQuery(
         'boards',

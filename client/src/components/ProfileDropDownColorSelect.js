@@ -11,8 +11,6 @@ const ProfileDropDownColorSelect = () => {
         setStoredColor(theme);
     };
 
-    console.log(themes['white'].hex);
-
     return (
         <div className="color-select">
             {Object.keys(themes).map((key) => (
