@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import {
     BrowserRouter as Router,
@@ -7,6 +7,7 @@ import {
     Route,
     Switch
 } from 'react-router-dom';
+import { ThemeContext } from '../helper/ThemeStore';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import './App.css';
 import DashBoard from './DashBoard';
@@ -38,30 +39,43 @@ const App = () => {
         return token !== null;
     }, [token, setToken]);
 
+    // get themecolor
+    const { storedColor } = useContext(ThemeContext);
+
     return (
-        <QueryClientProvider client={queryClient}>
-            <Router>
-                <Navigation token={token} setToken={setToken} authed={authed} />
-                <main className="d-flex flex-column position-relative">
-                    <Switch>
-                        <Redirect exact path="/" to="/dashboard" />
+        <div
+            className="app-container"
+            style={{ backgroundColor: storedColor.hex }}
+        >
+            <QueryClientProvider client={queryClient}>
+                <Router>
+                    <Navigation
+                        token={token}
+                        setToken={setToken}
+                        authed={authed}
+                        fontColor={storedColor.fontColor}
+                    />
+                    <main className="d-flex flex-column position-relative">
+                        <Switch>
+                            <Redirect exact path="/" to="/dashboard" />
 
-                        <PrivateRoute
-                            path="/dashboard"
-                            authed={authed}
-                            component={DashBoard}
-                        />
+                            <PrivateRoute
+                                path="/dashboard"
+                                authed={authed}
+                                component={DashBoard}
+                            />
 
-                        <Route path="/login">
-                            <Login setToken={setToken} authed={authed} />
-                        </Route>
-                        <Route path="/register">
-                            <Register />
-                        </Route>
-                    </Switch>
-                </main>
-            </Router>
-        </QueryClientProvider>
+                            <Route path="/login">
+                                <Login setToken={setToken} authed={authed} />
+                            </Route>
+                            <Route path="/register">
+                                <Register />
+                            </Route>
+                        </Switch>
+                    </main>
+                </Router>
+            </QueryClientProvider>
+        </div>
     );
 };
 

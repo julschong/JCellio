@@ -1,0 +1,16 @@
+.color-select {
+    display: flex;
+    min-height: 100px;
+
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.color-option {
+    min-width: 50px;
+    min-height: 50px;
+    border: 3px hsl(195, 53%, 79%, 0.3) solid;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 4px;
+}

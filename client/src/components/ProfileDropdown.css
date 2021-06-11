@@ -3,7 +3,7 @@
     padding: 2em;
     min-width: 15em;
     top: 5em;
-    left: -10em;
+    right: 0;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     z-index: 1;

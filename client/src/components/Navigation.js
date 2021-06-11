@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Nav, Navbar, NavItem, NavLink } from 'reactstrap';
 import './Navigation.css';
-import ProfileDropdrown from './ProfileDropdrown';
+import ProfileDropdown from './ProfileDropdown';
 
-const Navigation = ({ token, setToken, authed }) => {
+const Navigation = ({ token, setToken, authed, fontColor }) => {
     const [showProfile, setShowProfile] = useState(false);
     return (
-        <Navbar>
+        <Navbar style={{ color: fontColor }}>
             <h1>JCellio</h1>
             <Nav className="mr-auto d-flex" style={{ color: 'white' }} navbar>
                 <NavItem>
@@ -26,7 +26,7 @@ const Navigation = ({ token, setToken, authed }) => {
                     >
                         <p>{authed.name.slice(0, 1)}</p>
                     </div>
-                    <ProfileDropdrown
+                    <ProfileDropdown
                         authed={authed}
                         token={token}
                         setToken={setToken}

@@ -15,7 +15,6 @@
 
 .navbar > h1 {
     font-size: 3.5em;
-    color: aliceblue;
     font-family: 'Bree Serif', serif;
     margin-right: 1.5em;
 }
@@ -43,7 +42,6 @@
 
 @media (max-width: 520px) {
     .navbar > h1 {
-        color: aliceblue;
         font-family: 'Bree Serif', serif;
         margin-right: 0em;
         font-size: 2em;
