@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   name      String?
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   boards    Board[]
+  comments  Comment[]
 }
 
 model Board {
@@ -43,11 +44,26 @@ model Column {
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   columnId    Int?
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
   description String?
   name        String?
-  updatedAt   DateTime @updatedAt
-  column      Column?  @relation(fields: [columnId], references: [id])
+  color       String?
+  startDate   DateTime?
+  endDate     DateTime?
+  updatedAt   DateTime  @updatedAt
+  column      Column?   @relation(fields: [columnId], references: [id])
+  comments    Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String?
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  taskId    Int?
+  task      Task?    @relation(fields: [taskId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
