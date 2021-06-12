@@ -71,11 +71,12 @@ exports.deleteTask = asyncHandler(async (req, res, next) => {
 });
 
 exports.getOneTask = asyncHandler(async (req, res, next) => {
-    const taskId = req.params.taskId;
+    const taskId = req.params.id;
     const foundTask = await task.findUnique({
         where: {
             id: taskId
-        }
+        },
+        include: { comments: true }
     });
     res.status(200).json({ success: true, data: foundTask });
 });
@@ -85,7 +86,12 @@ exports.updateTask = asyncHandler(async (req, res, next) => {
     const taskId = req.params.id;
 
     if (destColId === undefined || pos === undefined) {
-        throw new ErrorResponse(400, `destColId and pos are required in body`);
+        const { name, color, startDate, endDate } = req.body;
+        const updatedTask = await task.update({
+            where: { id: taskId },
+            data: { name, color, startDate, endDate }
+        });
+        return res.status(200).json({ success: true, data: updatedTask });
     }
 
     const taskToMove = await task.findUnique({ where: { id: taskId } });
