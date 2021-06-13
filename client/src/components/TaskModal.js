@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { StoreContext } from '../helper/Store';
 import taskService from '../services/taskService';
+import TaskDetail from './TaskDetail';
 import './TaskModal.css';
 
 const TaskModal = () => {
@@ -26,22 +27,7 @@ const TaskModal = () => {
         }
     }, [changeTaskModal]);
 
-    const displayData = () => {
-        console.log(taskData);
-        if (taskData) {
-            return (
-                <>
-                    <h4>{taskData.name}</h4>
-                    <p>{taskData.description}</p>
-                    <p>{taskData.startDate}</p>
-                    <p>{taskData.startDate}</p>
-                    <p>{taskData.startDate}</p>
-                    <p>{taskData.startDate}</p>
-                    <p>{taskData.startDate}</p>
-                </>
-            );
-        }
-    };
+    const displayData = taskData ? <TaskDetail taskData={taskData} /> : null;
 
     // ref for container, for mouse click closing modal
     const container = useRef();
@@ -55,7 +41,7 @@ const TaskModal = () => {
 
     return (
         <aside ref={container} className="modal-background">
-            <div className="modal-container">{displayData()}</div>
+            <div className="modal-container">{displayData}</div>
         </aside>
     );
 };

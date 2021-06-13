@@ -11,6 +11,13 @@ const getTask = async (taskId) => {
     return res.data;
 };
 
+const changeTask = async (taskId, content) => {
+    const res = await axios.put(`${FETCH.BASE_URL}/tasks/${taskId}`, content, {
+        headers: { authorization: token }
+    });
+    return res.data;
+};
+
 const swapTaskPos = async (srcTaskId, destCol, pos) => {
     const res = await axios.put(
         `${FETCH.BASE_URL}/tasks/${srcTaskId}`,
@@ -46,7 +53,8 @@ const taskService = {
     swapTaskPos,
     deleteTaskById,
     getTask,
-    createTask
+    createTask,
+    changeTask
 };
 
 export default taskService;

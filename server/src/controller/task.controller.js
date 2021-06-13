@@ -86,10 +86,10 @@ exports.updateTask = asyncHandler(async (req, res, next) => {
     const taskId = req.params.id;
 
     if (destColId === undefined || pos === undefined) {
-        const { name, color, startDate, endDate } = req.body;
+        const { name, description, color, startDate, endDate } = req.body;
         const updatedTask = await task.update({
             where: { id: taskId },
-            data: { name, color, startDate, endDate }
+            data: { name, description, color, startDate, endDate }
         });
         return res.status(200).json({ success: true, data: updatedTask });
     }
