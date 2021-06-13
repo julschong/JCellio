@@ -51,13 +51,16 @@ const Login = ({ setToken, authed }) => {
                                         setToken('bearer=' + res.data.token);
                                         setTimeout(() => {
                                             history.push('/dashboard');
+                                            window.location.reload();
                                         }, 2000);
                                     }
                                 })
                                 .catch((err) =>
                                     setError(err.response.data.error)
                                 )
-                                .finally(setSubmitting(false));
+                                .finally(() => {
+                                    setSubmitting(false);
+                                });
                         }}
                     >
                         {({
