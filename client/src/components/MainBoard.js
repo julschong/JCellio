@@ -32,12 +32,12 @@ const MainBoard = ({ selectedIndex, board }) => {
     // ref to the div at the end, when new column is added, scroll to the end
     const scrollToEnd = useRef();
 
-    const addColumn = async (name) => {
+    const addColumn = async (name, token) => {
         const newColumn = {
             title: `${name}`,
             boardId: board.id
         };
-        const savedColumn = await ColumnService.addColumn(newColumn);
+        const savedColumn = await ColumnService.addColumn(newColumn, token);
 
         setColumns((prev) => {
             const newData = [...prev, savedColumn.data];

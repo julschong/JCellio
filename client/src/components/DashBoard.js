@@ -2,22 +2,18 @@ import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Container } from 'reactstrap';
 import Store from '../helper/Store';
-import { FETCH } from '../helper/url';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import BoardService from '../services/boardService';
 import BoardSelect from './BoardSelect';
 import MainBoard from './MainBoard';
 
 const DashBoard = () => {
-    const [token] = useLocalStorage('token');
     const [selection, setSelection] = useState(null);
     const [showSideBar, setShowSideBar] = useState(false);
 
     const { data, isLoading, refetch } = useQuery(
         'boards',
         () =>
-            fetch(`${FETCH.BASE_URL}/boards`, {
-                headers: { Authorization: token }
-            })
+            BoardService.getBoards()
                 .then((res) => res.json())
                 .then((res) => res.data),
         { enabled: false }

@@ -98,8 +98,7 @@ const BoardSelect = ({
                                               }`}
                                               onClick={async () => {
                                                   await BoardService.deleteBoard(
-                                                      board.id,
-                                                      token
+                                                      board.id
                                                   );
                                                   refetch();
                                               }}
@@ -133,10 +132,7 @@ const BoardSelect = ({
                             if (e.key === 'Enter') {
                                 e.target.blur();
                                 if (e.target.value.trim().length > 0 && token)
-                                    await BoardService.addBoard(
-                                        e.target.value,
-                                        token
-                                    );
+                                    await BoardService.addBoard(e.target.value);
                                 e.target.value = '';
                                 refetch();
                             }

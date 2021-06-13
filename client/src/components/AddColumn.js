@@ -4,6 +4,7 @@ import { StoreContext } from '../helper/Store';
 
 const AddColumn = ({ addColumn }) => {
     const { addingColumn, setAddingColumn } = useContext(StoreContext);
+
     return (
         <div className="add-column p-2">
             {addingColumn ? (

@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { FETCH } from '../helper/url';
 
-const addBoard = async (newBoardTitle, token) => {
+const token = JSON.parse(window.localStorage.getItem('token'));
+
+const getBoards = () => {
+    return fetch(`${FETCH.BASE_URL}/boards`, {
+        headers: { Authorization: token }
+    });
+};
+
+const addBoard = async (newBoardTitle) => {
     const savedColumn = await axios.post(
         `${FETCH.BASE_URL}/boards`,
         {
@@ -12,7 +20,7 @@ const addBoard = async (newBoardTitle, token) => {
     return savedColumn.data;
 };
 
-const deleteBoard = async (boardId, token) => {
+const deleteBoard = async (boardId) => {
     await axios.delete(`${FETCH.BASE_URL}/boards/${boardId}`, {
         headers: { Authorization: token }
     });
@@ -20,7 +28,8 @@ const deleteBoard = async (boardId, token) => {
 
 const BoardService = {
     addBoard,
-    deleteBoard
+    deleteBoard,
+    getBoards
 };
 
 export default BoardService;

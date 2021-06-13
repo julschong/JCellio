@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { FETCH } from '../helper/url';
 
+const token = JSON.parse(window.localStorage.getItem('token'));
+
 const addColumn = async (newColumnTitle) => {
     const savedColumn = await axios.post(
         `${FETCH.BASE_URL}/columns`,
-        newColumnTitle
+        newColumnTitle,
+        { headers: { authorization: token } }
     );
     return savedColumn.data;
 };
@@ -12,14 +15,16 @@ const addColumn = async (newColumnTitle) => {
 const changeColumnName = async (columnId, newTitle) => {
     const savedColumn = await axios.put(
         `${FETCH.BASE_URL}/columns/${columnId}`,
-        { title: newTitle }
+        { title: newTitle },
+        { headers: { authorization: token } }
     );
     return savedColumn.data;
 };
 
 const deleteColumn = async (columnId) => {
     const deletedColumn = await axios.delete(
-        `${FETCH.BASE_URL}/columns/${columnId}`
+        `${FETCH.BASE_URL}/columns/${columnId}`,
+        { headers: { authorization: token } }
     );
     return deletedColumn.date;
 };

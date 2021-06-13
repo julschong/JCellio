@@ -1,8 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import ColumnService from '../services/columnService';
 import taskService from '../services/taskService';
-import { FETCH } from './url';
 
 export const StoreContext = React.createContext(null);
 
@@ -104,14 +102,14 @@ const Store = ({ children }) => {
             columnId
         };
 
-        const savedTask = await axios.post(`${FETCH.BASE_URL}/tasks`, newTask);
+        const savedTask = await taskService.createTask(newTask);
 
         setColumns((prev) => {
             const newData = [];
             for (const d of prev) {
                 if (d.id === columnId) {
-                    d.tasks.push(savedTask.data.data);
-                    d.taskPos.push(savedTask.data.data.id);
+                    d.tasks.push(savedTask.data);
+                    d.taskPos.push(savedTask.data.id);
                 }
                 newData.push(d);
             }
