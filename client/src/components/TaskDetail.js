@@ -11,7 +11,7 @@ const TaskDetail = ({ taskData }) => {
     );
 
     const { themes } = useContext(ThemeContext);
-    const { changeTaskColor } = useContext(StoreContext);
+    const { changeTask } = useContext(StoreContext);
 
     return (
         <form className="task-detail-flexbox">
@@ -31,7 +31,7 @@ const TaskDetail = ({ taskData }) => {
                     }}
                     onBlur={async (e) => {
                         if (e.target.value.trim().length > 0 && fieldChanged) {
-                            await taskService.changeTask(taskData.id, {
+                            await changeTask(taskData.columnId, taskData.id, {
                                 name: e.target.value.trim()
                             });
                             setFieldChanged(false);
@@ -134,10 +134,10 @@ const TaskDetail = ({ taskData }) => {
                         onClick={async () => {
                             if (color !== key) {
                                 setColor(key);
-                                await changeTaskColor(
+                                await changeTask(
                                     taskData.columnId,
                                     taskData.id,
-                                    key
+                                    { color: key }
                                 );
                             }
                         }}

@@ -30,7 +30,11 @@ const Task = ({ task, index, taskId, columnId }) => {
                     >
                         <div
                             className="color-pill"
-                            style={{ backgroundColor: themes[task.color].hex }}
+                            style={{
+                                backgroundColor: task.color
+                                    ? themes[task.color].hex
+                                    : undefined
+                            }}
                         ></div>
                         <p
                             className="text-break p-0 m-0"

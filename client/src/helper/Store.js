@@ -143,16 +143,16 @@ const Store = ({ children }) => {
         });
     };
 
-    const changeTaskColor = async (columnId, taskId, color) => {
-        await taskService.changeTask(taskId, { color });
+    const changeTask = async (columnId, taskId, change) => {
+        await taskService.changeTask(taskId, change);
         setColumns((prev) => {
             const column = {
                 ...prev.find((column) => column.id === columnId)
             };
 
-            const task = column.tasks.find((task) => task.id === taskId);
+            let task = column.tasks.find((task) => task.id === taskId);
 
-            task.color = color;
+            task = { ...task, ...change };
 
             column.tasks = [
                 ...column.tasks.filter((task) => task.id !== taskId),
@@ -164,7 +164,7 @@ const Store = ({ children }) => {
     };
 
     const store = {
-        changeTaskColor,
+        changeTask,
         columns,
         setColumns,
         position,
