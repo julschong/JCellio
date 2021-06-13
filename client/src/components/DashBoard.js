@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Container } from 'reactstrap';
-import Store from '../helper/Store';
 import BoardService from '../services/boardService';
 import BoardSelect from './BoardSelect';
 import MainBoard from './MainBoard';
@@ -54,14 +53,12 @@ const DashBoard = () => {
                         showSideBar={showSideBar}
                         setShowSideBar={setShowSideBar}
                     />
-                    <Store>
-                        <MainBoard
-                            selectedIndex={selection}
-                            data={data}
-                            board={board}
-                            loading={isLoading}
-                        />
-                    </Store>
+                    <MainBoard
+                        selectedIndex={selection}
+                        data={data}
+                        board={board}
+                        loading={isLoading}
+                    />
                 </Container>
             )}
         </Container>

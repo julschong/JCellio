@@ -1,3 +1,36 @@
 .icon-activity:before {
     content: '\e900';
 }
+
+.task-color-select {
+    display: flex;
+    min-height: 50px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.task-color-option {
+    width: 25px;
+    height: 25px;
+    border: 3px hsl(195, 53%, 79%, 0.3) solid;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 4px;
+}
+
+.color-pill {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    height: 1ch;
+    width: 100px;
+}
+
+.task-detail-flexbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-detail-flexbox > div > label {
+    display: block;
+}

@@ -6,6 +6,8 @@ export const ThemeContext = React.createContext(null);
 const ThemeStore = ({ children }) => {
     const themes = Object.freeze({
         blue: { hex: '#084999', fontColor: 'white' },
+        babyBlue: { hex: '#78C0F9', fontColor: 'white' },
+        babyPink: { hex: '#FFDBE6', fontColor: 'white' },
         darkBlue: { hex: '#122A52', fontColor: 'white' },
         lightBlue: { hex: '#1099E0', fontColor: 'white' },
         purple: { hex: '#875F9A', fontColor: 'white' },

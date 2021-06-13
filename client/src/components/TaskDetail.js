@@ -1,11 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { StoreContext } from '../helper/Store';
+import { ThemeContext } from '../helper/ThemeStore';
 import taskService from '../services/taskService';
+import './TaskDetail.css';
 
 const TaskDetail = ({ taskData }) => {
     const [fieldChanged, setFieldChanged] = useState(false);
+    const [color, setColor] = useState(
+        taskData.color ? taskData.color : 'white'
+    );
+
+    const { themes } = useContext(ThemeContext);
+    const { changeTaskColor } = useContext(StoreContext);
 
     return (
-        <form>
+        <form className="task-detail-flexbox">
+            <div
+                className="color-pill"
+                style={{ backgroundColor: themes[color].hex }}
+            ></div>
             <div>
                 <label htmlFor="title">Task</label>
                 <input
@@ -111,6 +124,25 @@ const TaskDetail = ({ taskData }) => {
                     }}
                     type="date"
                 />
+            </div>
+            <div className="task-color-select">
+                {Object.keys(themes).map((key) => (
+                    <div
+                        className="task-color-option"
+                        key={themes[key].hex}
+                        style={{ backgroundColor: themes[key].hex }}
+                        onClick={async () => {
+                            if (color !== key) {
+                                setColor(key);
+                                await changeTaskColor(
+                                    taskData.columnId,
+                                    taskData.id,
+                                    key
+                                );
+                            }
+                        }}
+                    ></div>
+                ))}
             </div>
         </form>
     );

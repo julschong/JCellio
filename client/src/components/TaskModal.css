@@ -9,10 +9,11 @@
 }
 
 .modal-container {
+    overflow: scroll;
     width: 75%;
-    height: 75%;
+    min-width: min-content;
     max-width: 400px;
-    max-height: 600px;
+    max-height: 100%;
     background-color: aliceblue;
     top: calc(50vh - 300px);
     left: calc(50vw - 200px);

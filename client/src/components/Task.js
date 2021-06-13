@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { StoreContext } from '../helper/Store';
+import { ThemeContext } from '../helper/ThemeStore';
 import './Task.css';
 
 const Task = ({ task, index, taskId, columnId }) => {
     const { deleteTask, setChangeTaskModel } = useContext(StoreContext);
+    const { themes } = useContext(ThemeContext);
     return (
         <Draggable draggableId={String(taskId)} index={index} key={taskId}>
             {(provided, snapshot) => {
@@ -26,6 +28,10 @@ const Task = ({ task, index, taskId, columnId }) => {
                             ...provided.draggableProps.style
                         }}
                     >
+                        <div
+                            className="color-pill"
+                            style={{ backgroundColor: themes[task.color].hex }}
+                        ></div>
                         <p
                             className="text-break p-0 m-0"
                             onClick={() => setChangeTaskModel(taskId)}

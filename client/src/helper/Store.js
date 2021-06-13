@@ -143,7 +143,28 @@ const Store = ({ children }) => {
         });
     };
 
+    const changeTaskColor = async (columnId, taskId, color) => {
+        await taskService.changeTask(taskId, { color });
+        setColumns((prev) => {
+            const column = {
+                ...prev.find((column) => column.id === columnId)
+            };
+
+            const task = column.tasks.find((task) => task.id === taskId);
+
+            task.color = color;
+
+            column.tasks = [
+                ...column.tasks.filter((task) => task.id !== taskId),
+                task
+            ];
+
+            return [...prev.filter((column) => column.id !== columnId), column];
+        });
+    };
+
     const store = {
+        changeTaskColor,
         columns,
         setColumns,
         position,
