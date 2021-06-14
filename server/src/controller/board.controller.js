@@ -4,7 +4,6 @@ const asyncHandler = require('express-async-handler');
 const ErrorResponse = require('../helper/errorResponse');
 
 exports.getAllBoards = asyncHandler(async (req, res, next) => {
-    console.log(req.info);
     const boards = await board.findMany({
         where: { userId: req.info.id },
         include: {

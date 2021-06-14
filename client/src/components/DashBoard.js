@@ -14,7 +14,13 @@ const DashBoard = () => {
         () =>
             BoardService.getBoards()
                 .then((res) => res.json())
-                .then((res) => res.data),
+                .then((res) => {
+                    if (res.error === 'Incorrect credential') {
+                        window.localStorage.removeItem('token');
+                        window.location.reload();
+                    }
+                    return res.data;
+                }),
         { enabled: false }
     );
 
