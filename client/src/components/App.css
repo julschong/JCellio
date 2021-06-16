@@ -87,7 +87,7 @@ main {
     border: none;
     height: auto;
     padding: 5px;
-    margin: 0;
+    margin-bottom: 10px;
     width: 100%;
     transition: boxshadow 0.5s;
 }

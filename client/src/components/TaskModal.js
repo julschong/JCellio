@@ -27,7 +27,7 @@ const TaskModal = () => {
         }
     }, [changeTaskModal]);
 
-    const displayData = taskData ? <TaskDetail taskData={taskData} /> : null;
+    const displayData = taskData && <TaskDetail taskData={taskData} />;
 
     // ref for container, for mouse click closing modal
     const container = useRef();

@@ -24,11 +24,19 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
     height: 1ch;
     width: 100px;
+    flex-shrink: 0;
 }
 
 .task-detail-flexbox {
     display: flex;
     flex-direction: column;
+    justify-items: flex-start;
+    align-items: flex-start;
+    height: 90%;
+    width: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: auto;
 }
 
 .task-detail-flexbox > div > label {

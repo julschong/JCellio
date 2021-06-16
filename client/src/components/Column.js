@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import Textarea from 'react-textarea-autosize';
 import { StoreContext } from '../helper/Store';
 import ColumnOptions from './../ColumnOptions';
 import AddItem from './AddItem';
@@ -15,7 +16,7 @@ const Column = ({ columnId, column, pos }) => {
         <div className="column">
             <div className="p-3 columns column-card">
                 <div className="column-edit">
-                    <textarea
+                    <Textarea
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 e.target.blur();

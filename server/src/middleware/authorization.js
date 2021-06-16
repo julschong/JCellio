@@ -15,8 +15,6 @@ exports.authorization = asyncHandler(async (req, res, next) => {
     try {
         const info = jwt.verify(token, process.env.SECRET);
         const usercheck = await user.findUnique({ where: { id: info.id } });
-        console.log(usercheck);
-        console.log(info);
 
         if (usercheck.email !== info.email || usercheck.name !== info.name) {
             throw new ErrorResponse(401, 'Incorrect credential');
