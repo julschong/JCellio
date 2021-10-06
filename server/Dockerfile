@@ -4,4 +4,5 @@ WORKDIR /app
 COPY . .
 RUN npm install
 EXPOSE 3003
-CMD npm start
+RUN apk update && apk add bash
+CMD bash
