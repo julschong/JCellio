@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import Store from './helper/Store';
 import ThemeStore from './helper/ThemeStore';
+import 'animate.css';
 
 ReactDOM.render(
     <ThemeStore>

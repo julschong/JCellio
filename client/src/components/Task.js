@@ -17,7 +17,7 @@ const Task = ({ task, index, taskId, columnId }) => {
                     : null;
                 return (
                     <div
-                        className="task"
+                        className="task animate__animated animate__fadeIn"
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}

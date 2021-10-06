@@ -4,6 +4,7 @@ import { Container } from 'reactstrap';
 import BoardService from '../services/boardService';
 import BoardSelect from './BoardSelect';
 import MainBoard from './MainBoard';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const DashBoard = () => {
     const [selection, setSelection] = useState(null);
@@ -45,10 +46,15 @@ const DashBoard = () => {
             style={{ maxWidth: '85vw' }}
         >
             {isLoading ? (
-                <h2>Loading</h2>
+                <h2>
+                    <AiOutlineLoading3Quarters
+                        className="loading-icon"
+                        size="10%"
+                    />
+                </h2>
             ) : (
                 <Container
-                    className="main-board container mt-3"
+                    className="main-board container mt-3 animate__animated animate__fadeIn"
                     style={{ maxWidth: '85vw' }}
                 >
                     <BoardSelect

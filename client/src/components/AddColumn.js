@@ -6,7 +6,7 @@ const AddColumn = ({ addColumn }) => {
     const { addingColumn, setAddingColumn } = useContext(StoreContext);
 
     return (
-        <div className="add-column p-2">
+        <div className="add-column p-2 animate__animated animate__fadeIn">
             {addingColumn ? (
                 <Form
                     className="p-2"

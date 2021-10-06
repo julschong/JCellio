@@ -11,7 +11,7 @@ const Login = ({ setToken, authed }) => {
     const [error, setError] = useState('');
 
     return (
-        <div className="form container w-25 mt-5">
+        <div className="form container w-25 mt-5 animate__animated animate__fadeIn">
             {!authed ? (
                 <>
                     <h2>Login</h2>
@@ -48,6 +48,7 @@ const Login = ({ setToken, authed }) => {
                                 .post(`${FETCH.BASE_URL}/auth/login`, values)
                                 .then((res) => {
                                     if (res.data.success) {
+                                        console.log(res.data.token);
                                         setToken('bearer=' + res.data.token);
                                         setTimeout(() => {
                                             history.push('/dashboard');
